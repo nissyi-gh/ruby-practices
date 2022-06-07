@@ -56,7 +56,13 @@ until days.empty? do
 
   # 土曜日まで、かつ日付が存在している間は出力
   while i <= 6 && days.first do
-    print i == 0 ? days.shift.to_s.rjust(2) : days.shift.to_s.rjust(3)
+    # 今日と日付が同じなら反転させる
+    if days.first != "" && today == Date.new(params["y"], params["m"], days.first.to_i)
+      print "\e[47m" + days.shift.to_s.rjust(2) + "\e[0m"
+    else
+      print days.shift.to_s.rjust(2)
+    end
+    print " " unless i == 6
     i += 1
   end
 
