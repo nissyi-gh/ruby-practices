@@ -1,6 +1,9 @@
 require 'date'
 require 'optparse'
 
+CALENDER_WIDTH = 20
+DAY_DIGIT = 2
+
 today = Date.today
 opt = OptionParser.new
 opt.on('-m')
@@ -26,7 +29,6 @@ end
 
 days = return_days_array_of_month(params["y"], params["m"])
 
-CALENDER_WIDTH = 20
 puts "#{params["m"]}月 #{params["y"]}".center(CALENDER_WIDTH)
 puts "日 月 火 水 木 金 土"
 
@@ -48,9 +50,9 @@ until days.empty? do
   while i <= 6 && days.first do
     # 今日と日付が同じなら反転させる
     if days.first != "" && today == Date.new(params["y"], params["m"], days.first.to_i)
-      print "\e[47m" + days.shift.to_s.rjust(2) + "\e[0m"
+      print "\e[47m" + days.shift.to_s.rjust(DAY_DIGIT) + "\e[0m"
     else
-      print days.shift.to_s.rjust(2)
+      print days.shift.to_s.rjust(DAY_DIGIT)
     end
     print " " unless i == 6
     i += 1
