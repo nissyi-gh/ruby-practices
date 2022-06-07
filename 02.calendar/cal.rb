@@ -23,17 +23,19 @@ opt = OptionParser.new
 opt.on('-m')
 opt.on('-y')
 params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
+year = params["y"].to_i
+month = params["m"].to_i
 
-validation_of_year(params["y"] = params["y"].to_i)
-validation_of_month(params["m"] = params["m"].to_i)
-days = return_days_array_of_month(params["y"], params["m"])
+validate_of_year(year)
+validate_of_month(month)
+days = return_days_array_of_month(year, month)
 
-puts "#{params["m"]}月 #{params["y"]}".center(CALENDER_WIDTH)
+puts "#{year}月 #{month}".center(CALENDER_WIDTH)
 puts "日 月 火 水 木 金 土"
 
 
 # 月初の曜日を特定する
-start_day_of_week = Date.new(params["y"], params["m"], 1).wday
+start_day_of_week = Date.new(year, month, 1).wday
 
 # 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
 start_day_of_week.times do
@@ -48,7 +50,7 @@ until days.empty? do
   # 土曜日まで、かつ日付が存在している間は出力
   while i <= 6 && days.first do
     # 今日と日付が同じなら反転させる
-    if days.first != "" && today == Date.new(params["y"], params["m"], days.first.to_i)
+    if days.first != "" && today == Date.new(year, month, days.first.to_i)
       print "\e[47m" + days.shift.to_s.rjust(DAY_DIGIT) + "\e[0m"
     else
       print days.shift.to_s.rjust(DAY_DIGIT)
