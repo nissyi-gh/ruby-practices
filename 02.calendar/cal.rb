@@ -40,14 +40,28 @@ puts DAY_OF_WEEK = "日 月 火 水 木 金 土"
 
 # 月初の曜日を特定する
 start_day_of_week = Date.new(params["y"], params["m"], 1).wday
-i = start_day_of_week
+
+# 月初の曜日が日曜だったら空文字は追加しない
+# 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
+if start_day_of_week != 0
+  start_day_of_week.times do
+    days.unshift("")
+  end
+end
+
 # days配列の要素が存在する限りループ
 until days.empty? do
+  # 曜日相当の一時変数
+  i = 0
+
   # 土曜日まで、かつ日付が存在している間は出力
   while i <= 6 && days.first do
     print i == 0 ? days.shift.to_s.rjust(2) : days.shift.to_s.rjust(3)
     i += 1
   end
+
+  # 土曜日まで出力したら改行
   puts
-  i = 0
 end
+# calコマンドは最後に改行を挟む
+puts
