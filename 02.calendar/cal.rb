@@ -31,4 +31,7 @@ def return_days_array_of_month(year, month)
 end
 
 p days = return_days_array_of_month(params["y"], params["m"])
-p params
+
+CALENDER_WIDTH = 20
+puts "#{params["m"]}月 #{params["y"]}".center(CALENDER_WIDTH)
+
