@@ -4,12 +4,6 @@ require 'optparse'
 CALENDER_WIDTH = 20
 DAY_DIGIT = 2
 
-today = Date.today
-opt = OptionParser.new
-opt.on('-m')
-opt.on('-y')
-params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
-
 def validation_of_year(year)
   puts "Invalid year." unless year >= 1 && year <= 9999
 end
@@ -18,15 +12,20 @@ def validation_of_month(month)
   puts "Invalid month." unless month >= 1 && month <= 12
 end
 
-validation_of_year(params["y"] = params["y"].to_i)
-validation_of_month(params["m"] = params["m"].to_i)
-
 # 指定した年月の日付配列を返す
 def return_days_array_of_month(year, month)
   last_day = Date.new(year, month, -1).day
   (1..last_day).map(&:to_i)
 end
 
+today = Date.today
+opt = OptionParser.new
+opt.on('-m')
+opt.on('-y')
+params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
+
+validation_of_year(params["y"] = params["y"].to_i)
+validation_of_month(params["m"] = params["m"].to_i)
 days = return_days_array_of_month(params["y"], params["m"])
 
 puts "#{params["m"]}月 #{params["y"]}".center(CALENDER_WIDTH)
