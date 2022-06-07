@@ -15,7 +15,7 @@ end
 # 指定した年月の日付配列を返す
 def return_days_array_of_month(year, month)
   last_day = Date.new(year, month, -1).day
-  (1..last_day).map(&:to_i)
+  (1..last_day).to_a
 end
 
 today = Date.today
