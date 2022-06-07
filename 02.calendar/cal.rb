@@ -4,11 +4,11 @@ require 'optparse'
 CALENDER_WIDTH = 20
 DAY_DIGIT = 2
 
-def validation_of_year(year)
+def validate_of_year(year)
   puts "Invalid year." unless year >= 1 && year <= 9999
 end
 
-def validation_of_month(month)
+def validate_of_month(month)
   puts "Invalid month." unless month >= 1 && month <= 12
 end
 
