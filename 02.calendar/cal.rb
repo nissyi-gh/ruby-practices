@@ -37,3 +37,17 @@ puts "#{params["m"]}月 #{params["y"]}".center(CALENDER_WIDTH)
 
 puts DAY_OF_WEEK = "日 月 火 水 木 金 土"
 
+
+# 月初の曜日を特定する
+start_day_of_week = Date.new(params["y"], params["m"], 1).wday
+i = start_day_of_week
+# days配列の要素が存在する限りループ
+until days.empty? do
+  # 土曜日まで、かつ日付が存在している間は出力
+  while i <= 6 && days.first do
+    print i == 0 ? days.shift.to_s.rjust(2) : days.shift.to_s.rjust(3)
+    i += 1
+  end
+  puts
+  i = 0
+end
