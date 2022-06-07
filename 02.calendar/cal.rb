@@ -24,6 +24,20 @@ def puts_month_year_day_of_week(year, month)
   puts "日 月 火 水 木 金 土"
 end
 
+def print_day(year, month, d, today, i)
+  # 今日と日付が同じなら反転させる
+  if d != "  " && today == Date.new(year, month, d.to_i)
+    print "\e[47m" + d + "\e[0m"
+  else
+    print d
+  end
+end
+
+# 土曜以外
+def print_blank(i)
+  print " " unless i == 6
+end
+
 today = Date.today
 opt = OptionParser.new
 opt.on('-m')
@@ -53,13 +67,8 @@ until days.empty? do
   # 土曜日まで、かつ日付が存在している間は出力
   while i <= 6 && days.first do
     d = days.shift.to_s.rjust(DAY_DIGIT)
-    # 今日と日付が同じなら反転させる
-    if d != "  " && today == Date.new(year, month, d.to_i)
-      print "\e[47m" + d + "\e[0m"
-    else
-      print d
-    end
-    print " " unless i == 6
+    print_day(year, month, d, today, i)
+    print_blank(i)
     i += 1
   end
 
