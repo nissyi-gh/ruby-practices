@@ -19,6 +19,15 @@ def return_days_array_of_month(year, month)
   (FIRST_DAY_OF_MONTH..last_day).to_a
 end
 
+def add_blank_to_days_array_for_start_monday(days, start_day_of_week)
+  # 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
+  start_day_of_week.times do
+    days.unshift("")
+  end
+
+  days.map {|d| d.to_s.rjust(DAY_DIGIT) }
+end
+
 def puts_month_year_day_of_week(year, month)
   puts "#{month}月 #{year}".center(CALENDER_WIDTH)
   puts "日 月 火 水 木 金 土"
@@ -50,14 +59,8 @@ validate_of_year(year)
 validate_of_month(month)
 puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
-
-# 月初の曜日を特定する
 start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
-
-# 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
-start_day_of_week.times do
-  days.unshift("")
-end
+days = add_blank_to_days_array_for_start_monday(days, start_day_of_week)
 
 # days配列の要素が存在する限りループ
 until days.empty? do
@@ -66,7 +69,7 @@ until days.empty? do
 
   # 土曜日まで、かつ日付が存在している間は出力
   while i <= 6 && days.first do
-    d = days.shift.to_s.rjust(DAY_DIGIT)
+    d = days.shift
     print_day(year, month, d, today, i)
     print_blank(i)
     i += 1
