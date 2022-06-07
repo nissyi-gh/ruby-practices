@@ -3,6 +3,7 @@ require 'optparse'
 
 CALENDER_WIDTH = 20
 DAY_DIGIT = 2
+FIRST_DAY_OF_MONTH = 1
 
 def validate_of_year(year)
   puts "Invalid year." unless year >= 1 && year <= 9999
@@ -15,7 +16,7 @@ end
 # 指定した年月の日付配列を返す
 def return_days_array_of_month(year, month)
   last_day = Date.new(year, month, -1).day
-  (1..last_day).to_a
+  (FIRST_DAY_OF_MONTH..last_day).to_a
 end
 
 def puts_month_year_day_of_week(year, month)
@@ -37,7 +38,7 @@ puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
 
 # 月初の曜日を特定する
-start_day_of_week = Date.new(year, month, 1).wday
+start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
 
 # 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
 start_day_of_week.times do
