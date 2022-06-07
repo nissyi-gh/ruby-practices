@@ -24,4 +24,11 @@ end
 validation_of_year(params["y"] = params["y"].to_i)
 validation_of_month(params["m"] = params["m"].to_i)
 
+# 指定した年月の日付配列を返す
+def return_days_array_of_month(year, month)
+  last_day = Date.new(year, month, -1).day
+  (1..last_day).map(&:to_i)
+end
+
+p days = return_days_array_of_month(params["y"], params["m"])
 p params
