@@ -30,8 +30,10 @@ def return_days_array_of_month(year, month)
   (1..last_day).map(&:to_i)
 end
 
-p days = return_days_array_of_month(params["y"], params["m"])
+days = return_days_array_of_month(params["y"], params["m"])
 
 CALENDER_WIDTH = 20
 puts "#{params["m"]}月 #{params["y"]}".center(CALENDER_WIDTH)
+
+puts DAY_OF_WEEK = "日 月 火 水 木 金 土"
 
