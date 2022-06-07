@@ -34,12 +34,9 @@ puts "日 月 火 水 木 金 土"
 # 月初の曜日を特定する
 start_day_of_week = Date.new(params["y"], params["m"], 1).wday
 
-# 月初の曜日が日曜だったら空文字は追加しない
 # 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
-if start_day_of_week != 0
-  start_day_of_week.times do
-    days.unshift("")
-  end
+start_day_of_week.times do
+  days.unshift("")
 end
 
 # days配列の要素が存在する限りループ
