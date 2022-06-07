@@ -34,8 +34,7 @@ days = return_days_array_of_month(params["y"], params["m"])
 
 CALENDER_WIDTH = 20
 puts "#{params["m"]}月 #{params["y"]}".center(CALENDER_WIDTH)
-
-puts DAY_OF_WEEK = "日 月 火 水 木 金 土"
+puts "日 月 火 水 木 金 土"
 
 
 # 月初の曜日を特定する
