@@ -18,6 +18,11 @@ def return_days_array_of_month(year, month)
   (1..last_day).to_a
 end
 
+def puts_month_year_day_of_week(year, month)
+  puts "#{month}月 #{year}".center(CALENDER_WIDTH)
+  puts "日 月 火 水 木 金 土"
+end
+
 today = Date.today
 opt = OptionParser.new
 opt.on('-m')
@@ -28,11 +33,8 @@ month = params["m"].to_i
 
 validate_of_year(year)
 validate_of_month(month)
+puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
-
-puts "#{year}月 #{month}".center(CALENDER_WIDTH)
-puts "日 月 火 水 木 金 土"
-
 
 # 月初の曜日を特定する
 start_day_of_week = Date.new(year, month, 1).wday
