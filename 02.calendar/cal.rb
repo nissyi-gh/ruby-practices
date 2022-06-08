@@ -13,6 +13,15 @@ def validate_of_month(month)
   puts "Invalid month." unless month >= 1 && month <= 12
 end
 
+def puts_error_and_exit_if_exist_any_errors(errors)
+  return unless errors.first
+  errors.each do |e|
+    puts e
+  end
+
+  exit
+end
+
 # 指定した年月の日付配列を返す
 def return_days_array_of_month(year, month)
   last_day = Date.new(year, month, -1).day
@@ -72,9 +81,11 @@ opt.on('-y')
 params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
 year = params["y"].to_i
 month = params["m"].to_i
+errors = []
 
 validate_of_year(year)
 validate_of_month(month)
+puts_error_and_exit_if_exist_any_errors(errors)
 puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
 start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
