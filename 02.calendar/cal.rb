@@ -47,6 +47,24 @@ def print_blank(i)
   print " " unless i == 6
 end
 
+def print_calender(year, month, today, days)
+  until days.empty? do
+    # 曜日相当の一時変数
+    i = 0
+
+    # 土曜日まで、かつ日付が存在している間は出力
+    while i <= 6 && days.first do
+      d = days.shift
+      print_day(year, month, d, today, i)
+      print_blank(i)
+      i += 1
+    end
+
+    # 土曜日まで出力したら改行
+    puts
+  end
+end
+
 today = Date.today
 opt = OptionParser.new
 opt.on('-m')
@@ -61,22 +79,6 @@ puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
 start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
 days = add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
-
-# days配列の要素が存在する限りループ
-until days.empty? do
-  # 曜日相当の一時変数
-  i = 0
-
-  # 土曜日まで、かつ日付が存在している間は出力
-  while i <= 6 && days.first do
-    d = days.shift
-    print_day(year, month, d, today, i)
-    print_blank(i)
-    i += 1
-  end
-
-  # 土曜日まで出力したら改行
-  puts
-end
+print_calender(year, month, today, days)
 # calコマンドは最後に改行を挟む
 puts
