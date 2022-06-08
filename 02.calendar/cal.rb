@@ -4,13 +4,18 @@ require 'optparse'
 CALENDER_WIDTH = 20
 DAY_DIGIT = 2
 FIRST_DAY_OF_MONTH = 1
+MIN_YEAR = 1
+MAX_YEAR = 9999
+JANUARY = 1
+DECENMBER = 12
+SATURDAY = 6
 
 def validate_of_year(year)
-  puts "Invalid year." unless year >= 1 && year <= 9999
+  "Invalid year." unless year >= MIN_YEAR && year <= MAX_YEAR
 end
 
 def validate_of_month(month)
-  puts "Invalid month." unless month >= 1 && month <= 12
+  "Invalid month." unless month >= JANUARY && month <= DECENMBER
 end
 
 def puts_error_and_exit_if_exist_any_errors(errors)
@@ -53,7 +58,7 @@ end
 
 # 土曜以外
 def print_blank(i)
-  print " " unless i == 6
+  print " " unless i == SATURDAY
 end
 
 def print_calender(year, month, today, days)
@@ -62,7 +67,7 @@ def print_calender(year, month, today, days)
     i = 0
 
     # 土曜日まで、かつ日付が存在している間は出力
-    while i <= 6 && days.first do
+    while i <= SATURDAY && days.first do
       d = days.shift
       print_day(year, month, d, today, i)
       print_blank(i)
@@ -83,8 +88,8 @@ year = params["y"].to_i
 month = params["m"].to_i
 errors = []
 
-validate_of_year(year)
-validate_of_month(month)
+errors << validate_of_year(year)
+errors << validate_of_month(month)
 puts_error_and_exit_if_exist_any_errors(errors)
 puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
