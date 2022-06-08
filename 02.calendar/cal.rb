@@ -19,7 +19,7 @@ def return_days_array_of_month(year, month)
   (FIRST_DAY_OF_MONTH..last_day).to_a
 end
 
-def add_blank_to_days_array_for_start_monday(days, start_day_of_week)
+def add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
   # 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
   start_day_of_week.times do
     days.unshift("")
@@ -60,7 +60,7 @@ validate_of_month(month)
 puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
 start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
-days = add_blank_to_days_array_for_start_monday(days, start_day_of_week)
+days = add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
 
 # days配列の要素が存在する限りループ
 until days.empty? do
