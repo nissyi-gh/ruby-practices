@@ -10,12 +10,14 @@ JANUARY = 1
 DECENMBER = 12
 SATURDAY = 6
 
-def validate_of_year(year)
-  "Invalid year." unless year >= MIN_YEAR && year <= MAX_YEAR
+def add_error_text_to_errors_unless_valid_year(year, errors)
+  return if year >= MIN_YEAR && year <= MAX_YEAR
+  errors << "cal: year `#{year}' not in range #{MIN_YEAR}..#{MAX_YEAR}"
 end
 
-def validate_of_month(month)
-  "Invalid month." unless month >= JANUARY && month <= DECENMBER
+def add_error_text_to_errors_unless_valid_month(month, errors)
+  return if month >= JANUARY && month <= DECENMBER
+  errors << "cal: #{month} is neither a month number (#{JANUARY}..#{DECENMBER}) nor a name"
 end
 
 def puts_error_and_exit_if_exist_any_errors(errors)
@@ -88,8 +90,8 @@ year = params["y"].to_i
 month = params["m"].to_i
 errors = []
 
-errors << validate_of_year(year)
-errors << validate_of_month(month)
+add_error_text_to_errors_unless_valid_year(year, errors)
+add_error_text_to_errors_unless_valid_month(month, errors)
 puts_error_and_exit_if_exist_any_errors(errors)
 puts_month_year_day_of_week(year, month)
 days = return_days_array_of_month(year, month)
