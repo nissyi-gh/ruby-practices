@@ -10,3 +10,13 @@ score.each do |s|
     shots << s.to_i
   end
 end
+
+frames = []
+shots.each_slice(2) do |s|
+  frames << s
+end
+
+if frames[10]
+  frames[9].concat(frames[10])
+  frames.pop
+end
