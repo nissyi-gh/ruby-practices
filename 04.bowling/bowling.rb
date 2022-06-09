@@ -30,9 +30,28 @@ def slice_each_frame(shots)
   frames
 end
 
+def calulate_total_score(frames)
+  total = 0
+
+  frames.each_with_index do |f, index|
+    if index <= 8
+      total += calulate_each_frame_score(f, frames[index + 1])
+    else
+      total += f.sum
+    end
+  end
+
+  total
+end
+
+def calulate_each_frame_score(frame, next_frame)
+  0
+end
+
 score = ARGV[0].split(",")
 shots = []
 frames = []
 
 shots = replace_strike_to_score_and_convert_integer(score)
 frames = slice_each_frame(shots)
+p calulate_total_score(frames)
