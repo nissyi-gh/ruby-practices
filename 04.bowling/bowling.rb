@@ -1,17 +1,26 @@
 # frozen_string_literal: true
-score = ARGV[0].split(",")
-shots = []
 
-score.each do |s|
-  if s == 'X'
-    shots << 10
-    shots << 0
-  else
-    shots << s.to_i
+def replace_strike_to_score_and_convert_integer(score)
+  shots = []
+
+  score.each do |s|
+    if s == 'X'
+      shots << 10
+      shots << 0
+    else
+      shots << s.to_i
+    end
   end
+
+  shots
 end
 
+score = ARGV[0].split(",")
+shots = []
 frames = []
+
+shots = replace_strike_to_score_and_convert_integer(score)
+
 shots.each_slice(2) do |s|
   frames << s
 end
