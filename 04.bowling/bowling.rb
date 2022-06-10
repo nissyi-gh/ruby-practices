@@ -5,7 +5,7 @@ def replace_strike_to_score_and_convert_integer(score)
 
   score.each do |s|
     if s == 'X'
-      if shots.size % 2 == 0
+      if shots.size.even?
         shots << 10
         shots << 0
       else
