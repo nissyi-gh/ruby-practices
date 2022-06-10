@@ -15,7 +15,7 @@ def replace_strike_to_score_and_convert_integer(score)
   shots
 end
 
-def ignore_zero_after_strike_until_9_frame(shots)
+def ignore_zero_after_strike(shots)
   pure_shots = []
 
   0.step(8) do |n|
