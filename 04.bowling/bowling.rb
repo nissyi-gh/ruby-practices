@@ -71,7 +71,7 @@ def calculate_each_frame_score(frame, index, frames)
   frame_score
 end
 
-score = ARGV[0].split(",")
+score = ARGV[0].split(',')
 
 shots = replace_strike_to_score_and_convert_integer(score)
 frames = slice_each_frame(shots)
