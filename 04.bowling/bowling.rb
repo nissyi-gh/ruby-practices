@@ -15,6 +15,23 @@ def replace_strike_to_score_and_convert_integer(score)
   shots
 end
 
+def ignore_zero_after_strike_until_9_frame(shots)
+  pure_shots = []
+
+  0.step(8) do |n|
+    frame = n * 2
+
+    if shots[frame] == 10
+      pure_shots << shots[frame]
+    else
+      pure_shots << shots[frame]
+      pure_shots << shots[frame + 1]
+    end
+  end
+
+  pure_shots
+end
+
 def slice_each_frame(shots)
   frames = []
 
@@ -53,5 +70,6 @@ shots = []
 frames = []
 
 shots = replace_strike_to_score_and_convert_integer(score)
+pure_shots_until_9_frame = ignore_zero_after_strike(shots)
 frames = slice_each_frame(shots)
 p calculate_total_score(frames)
