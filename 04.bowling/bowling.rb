@@ -19,18 +19,6 @@ def replace_strike_to_score_and_convert_integer(score)
   shots
 end
 
-def concat_frames(frames)
-  pure_shots = []
-
-  frames.each do |frame|
-    frame.each do |pure_shot|
-      pure_shots << pure_shot
-    end
-  end
-
-  pure_shots
-end
-
 def slice_each_frame(shots)
   frames = []
 
@@ -84,10 +72,7 @@ def calculate_each_frame_score(frame, index, frames)
 end
 
 score = ARGV[0].split(",")
-shots = []
-frames = []
 
 shots = replace_strike_to_score_and_convert_integer(score)
 frames = slice_each_frame(shots)
-pure_shots = concat_frames(frames)
 p calculate_total_score(frames)
