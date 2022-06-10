@@ -5,8 +5,12 @@ def replace_strike_to_score_and_convert_integer(score)
 
   score.each do |s|
     if s == 'X'
-      shots << 10
-      shots << 0
+      if shots.size % 2 == 0
+        shots << 10
+        shots << 0
+      else
+        shots << 10
+      end
     else
       shots << s.to_i
     end
@@ -36,12 +40,13 @@ def slice_each_frame(shots)
   frames = []
 
   shots.each_slice(2) do |s|
+    s.pop if s[0] == 10 && s[1].zero?
     frames << s
   end
 
-  if frames[10]
+  until frames.size == 10 do
     frames[9].concat(frames[10])
-    frames.pop
+    frames.delete_at(10)
   end
 
   frames
