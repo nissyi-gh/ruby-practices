@@ -27,7 +27,7 @@ def slice_each_frame(shots)
     frames << s
   end
 
-  until frames.size == 10 do
+  until frames.size == 10
     frames[9].concat(frames[10])
     frames.delete_at(10)
   end
