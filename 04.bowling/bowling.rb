@@ -19,17 +19,12 @@ def replace_strike_to_score_and_convert_integer(score)
   shots
 end
 
-def ignore_zero_after_strike(shots)
+def concat_frames(frames)
   pure_shots = []
 
-  0.step(8) do |n|
-    frame = n * 2
-
-    if shots[frame] == 10
-      pure_shots << shots[frame]
-    else
-      pure_shots << shots[frame]
-      pure_shots << shots[frame + 1]
+  frames.each do |frame|
+    frame.each do |pure_shot|
+      pure_shots << pure_shot
     end
   end
 
@@ -93,6 +88,6 @@ shots = []
 frames = []
 
 shots = replace_strike_to_score_and_convert_integer(score)
-pure_shots_until_9_frame = ignore_zero_after_strike(shots)
 frames = slice_each_frame(shots)
+pure_shots = concat_frames(frames)
 p calculate_total_score(frames)
