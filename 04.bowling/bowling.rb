@@ -57,7 +57,7 @@ def calculate_total_score(frames)
 
   frames.each_with_index do |f, index|
     if index <= 8
-      total += calculate_each_frame_score(f, frames[index + 1])
+      total += calculate_each_frame_score(f, index, frames)
     else
       total += f.sum
     end
@@ -66,8 +66,26 @@ def calculate_total_score(frames)
   total
 end
 
-def calculate_each_frame_score(frame, next_frame)
-  0
+def calculate_each_frame_score(frame, index, frames)
+  frame_score = frame.sum
+
+  if frame[0] == 10
+    frame_score += frames[index + 1][0]
+
+    if frames[index + 1][0] == 10
+      if index == 8
+        frame_score += frames[index + 1][1]
+      else
+        frame_score += frames[index + 2][0]
+      end
+    else
+      frame_score += frames[index + 1][1]
+    end
+  elsif frame.sum == 10
+    frame_score += frames[index + 1][0]
+  end
+
+  frame_score
 end
 
 score = ARGV[0].split(",")
