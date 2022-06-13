@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 def main
-  score = ARGV[0].split(',')
+  scores = ARGV[0].split(',')
 
-  shots = replace_strike_to_score_and_convert_integer(score)
+  shots = replace_strike_to_score_and_convert_integer(scores)
   frames = slice_each_frame(shots)
   p calculate_total_score(frames)
 end
 
-def replace_strike_to_score_and_convert_integer(score)
+def replace_strike_to_score_and_convert_integer(scores)
   shots = []
 
-  score.each do |score|
+  scores.each do |score|
     if score == 'X'
       shots << 10
       shots << 0 if shots.size.odd?
