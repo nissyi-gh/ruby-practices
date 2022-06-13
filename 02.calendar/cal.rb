@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'date'
 require 'optparse'
 
@@ -11,9 +13,9 @@ def main
   opt = OptionParser.new
   opt.on('-m')
   opt.on('-y')
-  params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
-  year = params["y"].to_i
-  month = params["m"].to_i
+  params = ARGV.getopts('', "y:#{today.year}", "m:#{today.month}")
+  year = params['y'].to_i
+  month = params['m'].to_i
 
   unless valid_year?(year)
     puts "cal: year `#{year}' not in range #{MIN_YEAR}..#{MAX_YEAR}"
@@ -65,11 +67,11 @@ def calender_body(today, dates)
 
     next unless date.saturday?
 
-    puts week.join(" ").rjust(CALENDER_WIDTH)
+    puts week.join(' ').rjust(CALENDER_WIDTH)
     week = []
   end
 
-  puts week.join(" ")
+  puts week.join(' ')
   # 月末が土曜日の場合は、1行上のputsで改行を挟める。それ以外は以下のputsで意図的に挟む。
   puts unless dates.last.saturday?
 end
