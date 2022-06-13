@@ -11,12 +11,12 @@ end
 def replace_strike_to_score_and_convert_integer(score)
   shots = []
 
-  score.each do |s|
-    if s == 'X'
+  score.each do |score|
+    if score == 'X'
       shots << 10
       shots << 0 if shots.size.odd?
     else
-      shots << s.to_i
+      shots << score.to_i
     end
   end
 
@@ -26,9 +26,9 @@ end
 def slice_each_frame(shots)
   frames = []
 
-  shots.each_slice(2) do |s|
-    s.pop if s[0] == 10 && s[1].zero?
-    frames << s
+  shots.each_slice(2) do |shot|
+    shot.pop if shot[0] == 10 && shot[1].zero?
+    frames << shot
   end
 
   until frames.size == 10
@@ -42,8 +42,8 @@ end
 def calculate_total_score(frames)
   total = 0
 
-  frames.each_with_index do |f, index|
-    total += index <= 8 ? calculate_each_frame_score(f, index, frames) : f.sum
+  frames.each_with_index do |frame, index|
+    total += index <= 8 ? calculate_each_frame_score(frame, index, frames) : frame.sum
   end
 
   total
