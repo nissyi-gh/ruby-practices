@@ -33,15 +33,6 @@ def generate_dates(year, month)
   (first_date..last_date).to_a
 end
 
-def add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
-  # 月初の曜日を合わせて出力できるようにdays配列へ空文字を追加
-  start_day_of_week.times do
-    days.unshift("")
-  end
-
-  days.map {|d| d.to_s.rjust(DAY_DIGIT) }
-end
-
 def puts_month_year_day_of_week(year, month)
   puts "#{month}月 #{year}".center(CALENDER_WIDTH)
   puts "日 月 火 水 木 金 土"
@@ -54,11 +45,6 @@ def print_day(year, month, d, today, i)
   else
     print d
   end
-end
-
-# 土曜以外
-def print_blank(i)
-  print " " unless i == SATURDAY
 end
 
 def print_calender(today, dates)
@@ -89,8 +75,4 @@ add_error_text_to_errors_unless_valid_month(month, errors)
 puts_error_and_exit_if_exist_any_errors(errors)
 puts_month_year_day_of_week(year, month)
 dates = generate_dates(year, month)
-start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
-# days = add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
 print_calender(today, dates)
-# calコマンドは最後に改行を挟む
-puts
