@@ -38,12 +38,11 @@ def puts_month_year_day_of_week(year, month)
   puts "日 月 火 水 木 金 土"
 end
 
-def print_day(year, month, d, today, i)
-  # 今日と日付が同じなら反転させる
-  if d != "  " && today == Date.new(year, month, d.to_i)
-    print "\e[47m" + d + "\e[0m"
+def formatted_day(date, today)
+  if date == today
+    "\e[47m#{date.day.to_s.rjust(DAY_DIGIT)}\e[0m"
   else
-    print d
+    date.day.to_s.rjust(DAY_DIGIT)
   end
 end
 
@@ -51,7 +50,7 @@ def print_calender(today, dates)
   week = []
 
   dates.each do |date|
-    week << date.day.to_s.rjust(2)
+    week << formatted_day(date, today)
 
     next unless date.saturday?
 
