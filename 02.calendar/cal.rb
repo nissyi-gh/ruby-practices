@@ -6,6 +6,30 @@ DAY_DIGIT = 2
 MIN_YEAR = 1
 MAX_YEAR = 9999
 
+def main
+  today = Date.today
+  opt = OptionParser.new
+  opt.on('-m')
+  opt.on('-y')
+  params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
+  year = params["y"].to_i
+  month = params["m"].to_i
+
+  unless valid_year?(year)
+    puts "cal: year `#{year}' not in range #{MIN_YEAR}..#{MAX_YEAR}"
+    return
+  end
+
+  unless valid_month?(month)
+    puts "cal: #{month} is neither a month number (1..12) nor a name"
+    return
+  end
+
+  calender_header(year, month)
+  dates = generate_dates(year, month)
+  calender_body(today, dates)
+end
+
 def valid_year?(year)
   year >= MIN_YEAR && year <= MAX_YEAR
 end
@@ -50,24 +74,4 @@ def calender_body(today, dates)
   puts unless dates.last.saturday?
 end
 
-today = Date.today
-opt = OptionParser.new
-opt.on('-m')
-opt.on('-y')
-params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
-year = params["y"].to_i
-month = params["m"].to_i
-
-unless valid_year?(year)
-  puts "cal: year `#{year}' not in range #{MIN_YEAR}..#{MAX_YEAR}"
-  return
-end
-
-unless valid_month?(month)
-  puts "cal: #{month} is neither a month number (1..12) nor a name"
-  return
-end
-
-dates = generate_dates(year, month)
-calender_header(year, month)
-calender_body(today, dates)
+main
