@@ -58,7 +58,10 @@ def print_calender(today, dates)
     puts week.join(" ").rjust(CALENDER_WIDTH)
     week = []
   end
-  puts week.join(" ").ljust(CALENDER_WIDTH)
+
+  puts week.join(" ")
+  # 月末が土曜日の場合は、1行上のputsで改行を挟める。それ以外は以下のputsで意図的に挟む。
+  puts unless dates.last.saturday?
 end
 
 today = Date.today
