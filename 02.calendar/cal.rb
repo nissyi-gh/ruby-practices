@@ -61,22 +61,18 @@ def print_blank(i)
   print " " unless i == SATURDAY
 end
 
-def print_calender(year, month, today, days)
-  until days.empty? do
-    # 曜日相当の一時変数
-    i = 0
+def print_calender(today, dates)
+  week = []
 
-    # 土曜日まで、かつ日付が存在している間は出力
-    while i <= SATURDAY && days.first do
-      d = days.shift
-      print_day(year, month, d, today, i)
-      print_blank(i)
-      i += 1
-    end
+  dates.each do |date|
+    week << date.day.to_s.rjust(2)
 
-    # 土曜日まで出力したら改行
-    puts
+    next unless date.saturday?
+
+    puts week.join(" ").rjust(CALENDER_WIDTH)
+    week = []
   end
+  puts week.join(" ").ljust(CALENDER_WIDTH)
 end
 
 today = Date.today
@@ -94,7 +90,7 @@ puts_error_and_exit_if_exist_any_errors(errors)
 puts_month_year_day_of_week(year, month)
 dates = generate_dates(year, month)
 start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
-days = add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
-print_calender(year, month, today, days)
+# days = add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
+print_calender(today, dates)
 # calコマンドは最後に改行を挟む
 puts
