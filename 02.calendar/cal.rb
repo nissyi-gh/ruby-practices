@@ -18,15 +18,6 @@ def add_error_text_to_errors_unless_valid_month(month, errors)
   errors << "cal: #{month} is neither a month number (1..12) nor a name"
 end
 
-def puts_error_and_exit_if_exist_any_errors(errors)
-  return unless errors.first
-  errors.each do |e|
-    puts e
-  end
-
-  exit
-end
-
 def generate_dates(year, month)
   first_date = Date.new(year, month, 1)
   last_date = Date.new(year, month, -1)
@@ -74,7 +65,8 @@ errors = []
 
 add_error_text_to_errors_unless_valid_year(year, errors)
 add_error_text_to_errors_unless_valid_month(month, errors)
-puts_error_and_exit_if_exist_any_errors(errors)
+puts errors
+return if errors.any?
 
 dates = generate_dates(year, month)
 calender_header(year, month)
