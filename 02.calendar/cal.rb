@@ -3,10 +3,8 @@ require 'optparse'
 
 CALENDER_WIDTH = 20
 DAY_DIGIT = 2
-FIRST_DAY_OF_MONTH = 1
 MIN_YEAR = 1
 MAX_YEAR = 9999
-SATURDAY = 6
 
 def add_error_text_to_errors_unless_valid_year(year, errors)
   return if year >= MIN_YEAR && year <= MAX_YEAR
