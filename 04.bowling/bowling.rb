@@ -3,12 +3,12 @@
 def main
   scores = ARGV[0].split(',')
 
-  shots = replace_strike_to_score_and_convert_integer(scores)
+  shots = replace_strike_to_score(scores)
   frames = slice_each_frame(shots)
   p calculate_total_score(frames)
 end
 
-def replace_strike_to_score_and_convert_integer(scores)
+def replace_strike_to_score(scores)
   shots = []
 
   scores.each do |score|
