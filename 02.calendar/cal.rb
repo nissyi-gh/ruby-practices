@@ -33,9 +33,9 @@ def generate_dates(year, month)
   (first_date..last_date).to_a
 end
 
-def puts_month_year_day_of_week(year, month)
+def calender_header(year, month)
   puts "#{month}月 #{year}".center(CALENDER_WIDTH)
-  puts "日 月 火 水 木 金 土"
+  puts '日 月 火 水 木 金 土'
 end
 
 def formatted_day(date, today)
@@ -75,6 +75,7 @@ errors = []
 add_error_text_to_errors_unless_valid_year(year, errors)
 add_error_text_to_errors_unless_valid_month(month, errors)
 puts_error_and_exit_if_exist_any_errors(errors)
-puts_month_year_day_of_week(year, month)
+
 dates = generate_dates(year, month)
+calender_header(year, month)
 print_calender(today, dates)
