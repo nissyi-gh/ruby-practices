@@ -6,14 +6,12 @@ DAY_DIGIT = 2
 MIN_YEAR = 1
 MAX_YEAR = 9999
 
-def add_error_text_to_errors_unless_valid_year(year, errors)
-  return if year >= MIN_YEAR && year <= MAX_YEAR
-  errors << "cal: year `#{year}' not in range #{MIN_YEAR}..#{MAX_YEAR}"
+def valid_year?(year)
+  year >= MIN_YEAR && year <= MAX_YEAR
 end
 
-def add_error_text_to_errors_unless_valid_month(month, errors)
-  return if month >= 1 && month <= 12
-  errors << "cal: #{month} is neither a month number (1..12) nor a name"
+def valid_month?(month)
+  month >= 1 && month <= 12
 end
 
 def generate_dates(year, month)
@@ -59,12 +57,16 @@ opt.on('-y')
 params = ARGV.getopts("", "y:#{today.year}", "m:#{today.month}")
 year = params["y"].to_i
 month = params["m"].to_i
-errors = []
 
-add_error_text_to_errors_unless_valid_year(year, errors)
-add_error_text_to_errors_unless_valid_month(month, errors)
-puts errors
-return if errors.any?
+unless valid_year?(year)
+  puts "cal: year `#{year}' not in range #{MIN_YEAR}..#{MAX_YEAR}"
+  return
+end
+
+unless valid_month?(month)
+  puts "cal: #{month} is neither a month number (1..12) nor a name"
+  return
+end
 
 dates = generate_dates(year, month)
 calender_header(year, month)
