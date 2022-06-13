@@ -35,7 +35,7 @@ def formatted_day(date, today)
   end
 end
 
-def print_calender(today, dates)
+def calender_body(today, dates)
   week = []
 
   dates.each do |date|
@@ -68,4 +68,4 @@ return if errors.any?
 
 dates = generate_dates(year, month)
 calender_header(year, month)
-print_calender(today, dates)
+calender_body(today, dates)
