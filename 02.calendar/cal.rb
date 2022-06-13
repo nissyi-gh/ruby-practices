@@ -27,10 +27,10 @@ def puts_error_and_exit_if_exist_any_errors(errors)
   exit
 end
 
-# 指定した年月の日付配列を返す
-def return_days_array_of_month(year, month)
-  last_day = Date.new(year, month, -1).day
-  (FIRST_DAY_OF_MONTH..last_day).to_a
+def generate_dates(year, month)
+  first_date = Date.new(year, month, 1)
+  last_date = Date.new(year, month, -1)
+  (first_date..last_date).to_a
 end
 
 def add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
@@ -92,7 +92,7 @@ add_error_text_to_errors_unless_valid_year(year, errors)
 add_error_text_to_errors_unless_valid_month(month, errors)
 puts_error_and_exit_if_exist_any_errors(errors)
 puts_month_year_day_of_week(year, month)
-days = return_days_array_of_month(year, month)
+dates = generate_dates(year, month)
 start_day_of_week = Date.new(year, month, FIRST_DAY_OF_MONTH).wday
 days = add_blank_to_days_array_for_start_sunday(days, start_day_of_week)
 print_calender(year, month, today, days)
