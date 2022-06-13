@@ -1,5 +1,13 @@
 # frozen_string_literal: true
 
+def main
+  score = ARGV[0].split(',')
+
+  shots = replace_strike_to_score_and_convert_integer(score)
+  frames = slice_each_frame(shots)
+  p calculate_total_score(frames)
+end
+
 def replace_strike_to_score_and_convert_integer(score)
   shots = []
 
@@ -57,8 +65,4 @@ def calculate_each_frame_score(frame, index, frames)
   frame_score
 end
 
-score = ARGV[0].split(',')
-
-shots = replace_strike_to_score_and_convert_integer(score)
-frames = slice_each_frame(shots)
-p calculate_total_score(frames)
+main
