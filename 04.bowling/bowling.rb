@@ -42,24 +42,28 @@ end
 def calculate_total_score(frames)
   total = 0
 
-  frames.each_with_index do |frame, index|
-    total += index <= 8 ? calculate_each_frame_score(frame, index, frames) : frame.sum
+  # 次のフレームや、その次のフレームを参照しやすくするためにeachではなくuntil emptyで回しています
+  until frames.empty?
+    frame = frames.shift
+    total += frames.size.zero? ? frame.sum : calculate_each_frame(frame, frames)
   end
 
   total
 end
 
-def calculate_each_frame_score(frame, index, frames)
+def calculate_each_frame(frame, frames)
   frame_score = frame.sum
+  next_frame = frames[0]
+  after_next_frame = frames[1]
 
   if frame[0] == 10
-    frame_score += frames[index + 1][0]
+    frame_score += next_frame[0]
 
-    return frame_score += frames[index + 1][1] if frames[index + 1][0] < 10
+    return frame_score += next_frame[1] if next_frame[0] < 10
 
-    frame_score += index == 8 ? frames[index + 1][1] : frames[index + 2][0]
+    frame_score += after_next_frame.nil? ? next_frame[1] : after_next_frame[0]
   elsif frame.sum == 10
-    frame_score += frames[index + 1][0]
+    frame_score += next_frame[0]
   end
 
   frame_score
