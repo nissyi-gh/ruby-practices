@@ -61,7 +61,11 @@ def calculate_each_frame(frame, frames)
 
     return frame_score += next_frame[1] if next_frame[0] < 10
 
-    frame_score += after_next_frame.nil? ? next_frame[1] : after_next_frame[0]
+    frame_score += if after_next_frame.nil?
+                     next_frame[1]
+                   else
+                     after_next_frame[0]
+                   end
   elsif frame.sum == 10
     frame_score += next_frame[0]
   end
