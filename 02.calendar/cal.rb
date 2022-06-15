@@ -54,11 +54,7 @@ end
 def formatted_day(date, today)
   day = date.day.to_s.rjust(DAY_DIGIT)
 
-  if date == today
-    "\e[47m#{day}\e[0m"
-  else
-    day
-  end
+  date == today ? "\e[47m#{day}\e[0m" : day
 end
 
 def calender_body(today, dates)
