@@ -52,10 +52,12 @@ def calender_header(year, month)
 end
 
 def formatted_day(date, today)
+  day = date.day.to_s.rjust(DAY_DIGIT)
+
   if date == today
-    "\e[47m#{date.day.to_s.rjust(DAY_DIGIT)}\e[0m"
+    "\e[47m#{day}\e[0m"
   else
-    date.day.to_s.rjust(DAY_DIGIT)
+    day
   end
 end
 
