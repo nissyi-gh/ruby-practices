@@ -27,9 +27,9 @@ def main
     return
   end
 
-  calender_header(year, month)
+  print_calender_header(year, month)
   dates = generate_dates(year, month)
-  calender_body(today, dates)
+  print_calender_body(today, dates)
 end
 
 def valid_year?(year)
@@ -46,7 +46,7 @@ def generate_dates(year, month)
   (first_date..last_date).to_a
 end
 
-def calender_header(year, month)
+def print_calender_header(year, month)
   puts "#{month}月 #{year}".center(CALENDER_WIDTH)
   puts '日 月 火 水 木 金 土'
 end
@@ -57,7 +57,7 @@ def format_day(date, today)
   date == today ? "\e[47m#{day}\e[0m" : day
 end
 
-def calender_body(today, dates)
+def print_calender_body(today, dates)
   week = []
 
   dates.each do |date|
