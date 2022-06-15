@@ -51,7 +51,7 @@ def calender_header(year, month)
   puts '日 月 火 水 木 金 土'
 end
 
-def formatted_day(date, today)
+def format_day(date, today)
   day = date.day.to_s.rjust(DAY_DIGIT)
 
   date == today ? "\e[47m#{day}\e[0m" : day
@@ -61,7 +61,7 @@ def calender_body(today, dates)
   week = []
 
   dates.each do |date|
-    week << formatted_day(date, today)
+    week << format_day(date, today)
 
     next unless date.saturday?
 
