@@ -33,11 +33,11 @@ def main
 end
 
 def valid_year?(year)
-  year >= MIN_YEAR && year <= MAX_YEAR
+  (MIN_YEAR..MAX_YEAR).include?(year)
 end
 
 def valid_month?(month)
-  month >= 1 && month <= 12
+  (1..12).include?(month)
 end
 
 def generate_dates(year, month)
