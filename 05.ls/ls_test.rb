@@ -7,7 +7,13 @@ class LsTest < Minitest::Test
   end
 
   def test_without_option_and_one_folder_up
-    expect = "01.fizzbuzz 02.calendar 03.rake 04.bowling 05.ls 06.wc 07.bowling_object 08.ls_object 09.wc_object README.md"
+    expect = <<-TEXT
+    01.fizzbuzz 05.ls             09.wc_object
+    02.calendar 06.wc             README.md
+    03.rake     07.bowling_object
+    04.bowling  08.ls_object
+    TEXT
+
     assert_equal expect, `ruby ls.rb ..`
   end
 end
