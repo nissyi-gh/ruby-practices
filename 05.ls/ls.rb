@@ -8,4 +8,4 @@ def without_option(path_name)
 end
 
 path_name = ARGV[0] || '.'
-puts without_option(path_name)
+print without_option(path_name)
