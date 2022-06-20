@@ -19,9 +19,16 @@ def without_option(path_name)
     end
   end
 
+  file_name_width = 0
+  outputs.each do |n|
+    n.each do |file_name|
+      file_name_width = file_name.size if file_name_width < file_name.size
+    end
+  end
+
   list_height.times do |n|
     outputs.each do |output|
-      print "#{output[n]} " if output[n]
+      print "#{output[n].ljust(file_name_width + 2)}" if output[n]
     end
     puts
   end
