@@ -4,7 +4,7 @@ def no_option(path_name='.')
     file_names << file_name unless file_name[0] == '.'
   end
 
-  file_names.join(' ')
+  file_names.sort.join(' ')
 end
 
 no_option
