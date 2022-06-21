@@ -4,7 +4,7 @@ LIST_COLUMNS = 3
 def without_option(path_name)
   file_names = load_file_names(path_name)
   sort_file_names = file_names.sort
-  console_width = IO.console_size
+  console_width = IO.console_size[1]
   outputs = []
   rows = []
   list_height = (file_names.size.to_f / LIST_COLUMNS).ceil
@@ -18,6 +18,7 @@ def without_option(path_name)
   end
 
   file_name_width = configure_file_name_width(outputs)
+  output_columns = configure_output_columns(file_name_width, console_width)
 
   list_height.times do |n|
     outputs.each do |output|
@@ -45,6 +46,16 @@ def configure_file_name_width(outputs)
   end
 
   file_name_width
+end
+
+def configure_output_columns(file_name_width, console_width)
+  output_columns = LIST_COLUMNS
+
+  until file_name_width * LIST_COLUMNS < console_width || output_columns == 1
+    output_columns -= 1
+  end
+
+  output_columns
 end
 
 path_name = ARGV[0] || '.'
