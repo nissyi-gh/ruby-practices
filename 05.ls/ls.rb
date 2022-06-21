@@ -23,8 +23,13 @@ end
 
 def load_file_names(path_name)
   file_names = []
-  Dir.children(path_name).each do |file_name|
-    file_names << file_name unless file_name[0] == '.'
+
+  if path_name.directory?
+    Dir.children(path_name).each do |file_name|
+      file_names << file_name unless file_name[0] == '.'
+    end
+  else
+    file_names << path_name.to_s
   end
   file_names
 end
