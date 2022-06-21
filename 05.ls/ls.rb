@@ -1,8 +1,10 @@
+require 'io/console/size'
 LIST_WIDTH = 3
 
 def without_option(path_name)
   file_names = load_file_names(path_name)
   sort_file_names = file_names.sort
+  console_width = IO.console_size
   outputs = []
   rows = []
   list_height = (file_names.size.to_f / LIST_WIDTH).ceil
