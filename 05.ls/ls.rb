@@ -2,6 +2,8 @@ require 'io/console/size'
 LIST_COLUMNS = 3
 
 def without_option(path_name)
+  return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
+
   file_names = load_file_names(path_name)
   console_width = IO.console_size[1]
 
@@ -11,6 +13,10 @@ def without_option(path_name)
 
   output_style_file_names = format_file_names(file_names.sort, list_height)
   print_file_names(list_height, output_style_file_names, file_name_width)
+end
+
+def valid_path_name?(path_name)
+  Dir.exist?(path_name) || File.exist?(path_name)
 end
 
 def load_file_names(path_name)
