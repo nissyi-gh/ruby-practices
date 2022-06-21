@@ -1,5 +1,5 @@
 require 'io/console/size'
-LIST_WIDTH = 3
+LIST_COLUMNS = 3
 
 def without_option(path_name)
   file_names = load_file_names(path_name)
@@ -7,7 +7,7 @@ def without_option(path_name)
   console_width = IO.console_size
   outputs = []
   rows = []
-  list_height = (file_names.size.to_f / LIST_WIDTH).ceil
+  list_height = (file_names.size.to_f / LIST_COLUMNS).ceil
 
   sort_file_names.each do |file_name|
     rows << file_name
