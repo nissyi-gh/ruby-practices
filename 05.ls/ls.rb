@@ -49,7 +49,7 @@ end
 def configure_output_columns(file_name_width, console_width)
   output_columns = LIST_COLUMNS
 
-  output_columns -= 1 until file_name_width * LIST_COLUMNS < console_width || output_columns == 1
+  output_columns -= 1 while file_name_width * LIST_COLUMNS >= console_width && output_columns != 1
 
   output_columns
 end
