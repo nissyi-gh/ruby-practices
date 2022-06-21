@@ -1,11 +1,7 @@
 LIST_WIDTH = 3
 
 def without_option(path_name)
-  file_names = []
-  Dir.children(path_name).each do |file_name|
-    file_names << file_name unless file_name[0] == '.'
-  end
-
+  file_names = load_file_names(path_name)
   sort_file_names = file_names.sort
   outputs = []
   rows = []
@@ -19,12 +15,7 @@ def without_option(path_name)
     end
   end
 
-  file_name_width = 0
-  outputs.each do |n|
-    n.each do |file_name|
-      file_name_width = file_name.size if file_name_width < file_name.size
-    end
-  end
+  file_name_width = configure_file_name_width(outputs)
 
   list_height.times do |n|
     outputs.each do |output|
@@ -32,6 +23,26 @@ def without_option(path_name)
     end
     puts
   end
+end
+
+def load_file_names(path_name)
+  file_names = []
+  Dir.children(path_name).each do |file_name|
+    file_names << file_name unless file_name[0] == '.'
+  end
+  file_names
+end
+
+def configure_file_name_width(outputs)
+  file_name_width = 0
+
+  outputs.each do |n|
+    n.each do |file_name|
+      file_name_width = file_name.size if file_name_width < file_name.size
+    end
+  end
+
+  file_name_width
 end
 
 path_name = ARGV[0] || '.'
