@@ -7,7 +7,9 @@ def without_option(path_name)
   console_width = IO.console_size[1]
   outputs = []
   rows = []
-  list_height = (file_names.size.to_f / LIST_COLUMNS).ceil
+  file_name_width = configure_file_name_width(file_names)
+  output_columns = configure_output_columns(file_name_width, console_width)
+  list_height = (file_names.size.to_f / output_columns).ceil
 
   sort_file_names.each do |file_name|
     rows << file_name
@@ -16,9 +18,6 @@ def without_option(path_name)
       rows = []
     end
   end
-
-  file_name_width = configure_file_name_width(outputs)
-  output_columns = configure_output_columns(file_name_width, console_width)
 
   list_height.times do |n|
     outputs.each do |output|
@@ -36,13 +35,11 @@ def load_file_names(path_name)
   file_names
 end
 
-def configure_file_name_width(outputs)
+def configure_file_name_width(file_names)
   file_name_width = 0
 
-  outputs.each do |n|
-    n.each do |file_name|
-      file_name_width = file_name.size if file_name_width < file_name.size
-    end
+  file_names.each do |file_name|
+    file_name_width = file_name.size if file_name_width < file_name.size
   end
 
   file_name_width
