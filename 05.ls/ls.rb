@@ -27,6 +27,7 @@ end
 
 def load_file_names(path_name, flags = 0)
   return [path_name.to_s] if path_name.file?
+
   # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
   Dir.glob('*', flags, base: path_name)
 end
