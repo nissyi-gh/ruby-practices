@@ -4,7 +4,7 @@ require 'io/console/size'
 require 'pathname'
 LIST_COLUMNS = 3
 
-def without_option(path)
+def ls_command_simulate_without_option(path)
   path_name = Pathname.new(path)
   return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
 
@@ -62,4 +62,4 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
 end
 
 path = ARGV[0] || '.'
-without_option(path)
+ls_command_simulate_without_option(path)
