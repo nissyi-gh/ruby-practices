@@ -23,17 +23,9 @@ def valid_path_name?(path_name)
   path_name.exist?
 end
 
-def load_file_names(path_name)
-  file_names = []
-
-  if path_name.directory?
-    Dir.children(path_name).each do |file_name|
-      file_names << file_name unless file_name[0] == '.'
-    end
-  else
-    file_names << path_name.to_s
-  end
-  file_names
+def load_file_names(path_name, flags = 0)
+  # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
+  Dir.glob('*', flags, base: path_name)
 end
 
 def configure_file_name_width(file_names)
