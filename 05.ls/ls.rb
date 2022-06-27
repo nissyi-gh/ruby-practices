@@ -9,6 +9,8 @@ def ls_command_simulate_without_option(path)
   return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
 
   file_names = load_file_names(path_name)
+  return if file_names.empty?
+
   console_width = IO.console_size[1]
 
   file_name_width = file_names.map(&:length).max
@@ -24,6 +26,7 @@ def valid_path_name?(path_name)
 end
 
 def load_file_names(path_name, flags = 0)
+  return [path_name.to_s] if path_name.file?
   # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
   Dir.glob('*', flags, base: path_name)
 end
