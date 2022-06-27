@@ -37,13 +37,7 @@ def load_file_names(path_name)
 end
 
 def configure_file_name_width(file_names)
-  file_name_width = 0
-
-  file_names.each do |file_name|
-    file_name_width = file_name.size if file_name_width < file_name.size
-  end
-
-  file_name_width
+  file_names.map(&:length).max
 end
 
 def configure_output_columns(file_name_width, console_width)
