@@ -2,7 +2,7 @@
 
 require 'io/console/size'
 require 'pathname'
-LIST_COLUMNS = 3
+DEFAULT_COLUMN_COUNT = 3
 
 def ls_command_simulate_without_option(path)
   path_name = Pathname.new(path)
@@ -12,8 +12,8 @@ def ls_command_simulate_without_option(path)
   console_width = IO.console_size[1]
 
   file_name_width = file_names.map(&:length).max
-  output_columns = configure_output_columns(file_name_width, console_width)
-  list_height = (file_names.size.to_f / output_columns).ceil
+  column_count = configure_column_count(file_name_width, console_width)
+  list_height = (file_names.size.to_f / column_count).ceil
 
   output_style_file_names = format_file_names(file_names, list_height)
   print_file_names(list_height, output_style_file_names, file_name_width)
@@ -28,12 +28,12 @@ def load_file_names(path_name, flags = 0)
   Dir.glob('*', flags, base: path_name)
 end
 
-def configure_output_columns(file_name_width, console_width)
-  output_columns = LIST_COLUMNS
+def configure_column_count(file_name_width, console_width)
+  column_count = DEFAULT_COLUMN_COUNT
 
-  output_columns -= 1 while file_name_width * LIST_COLUMNS >= console_width && output_columns != 1
+  column_count -= 1 while file_name_width * DEFAULT_COLUMN_COUNT > console_width && column_count > 1
 
-  output_columns
+  column_count
 end
 
 def format_file_names(file_names, list_height)
