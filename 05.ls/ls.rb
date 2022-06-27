@@ -11,7 +11,7 @@ def without_option(path)
   file_names = load_file_names(path_name)
   console_width = IO.console_size[1]
 
-  file_name_width = configure_file_name_width(file_names)
+  file_name_width = file_names.map(&:length).max
   output_columns = configure_output_columns(file_name_width, console_width)
   list_height = (file_names.size.to_f / output_columns).ceil
 
@@ -26,10 +26,6 @@ end
 def load_file_names(path_name, flags = 0)
   # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
   Dir.glob('*', flags, base: path_name)
-end
-
-def configure_file_name_width(file_names)
-  file_names.map(&:length).max
 end
 
 def configure_output_columns(file_name_width, console_width)
