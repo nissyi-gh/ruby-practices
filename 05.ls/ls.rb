@@ -6,7 +6,6 @@ require 'optparse'
 DEFAULT_COLUMN_COUNT = 3
 CONSOLE_WIDTH = IO.console_size[1]
 
-
 def simulate_ls_command(path_names, params)
   path_names.each do |path_name|
     file_names = params[:a] ? Dir.entries(path_name).sort : Dir.glob('*', base: path_name)
@@ -19,10 +18,10 @@ def simulate_ls_command(path_names, params)
 end
 
 def parse_command_option
-  params = Hash.new
+  params = {}
   opt = OptionParser.new
 
-  opt.on('-a', params) {|v| params[:a] = true }
+  opt.on('-a', params) { params[:a] = true }
 
   opt.order!
   params
