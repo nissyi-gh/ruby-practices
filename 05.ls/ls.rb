@@ -48,7 +48,7 @@ def simulate_ls_command(path_names, params)
     file_names = params[:a] ? Dir.entries(path_name).sort : Dir.glob('*', base: path_name)
     next if file_names.empty?
 
-    puts "#{path_name}:" if path_names.size > 1
+    puts "#{path_name}:" if path_names.size > 1 || ARGV.size > 1
     print_file_names(file_names)
     puts unless path_name == path_names.last
   end
