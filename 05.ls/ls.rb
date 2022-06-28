@@ -64,13 +64,13 @@ def valid_path_name?(path_name)
 end
 
 def load_file_names(path_names, flags = 0)
-  paths_and_file_names = {}
+  paths_and_file_names = []
 
   path_names.each do |path_name|
-    next paths_and_file_names[path_name.to_s.to_sym] = nil if path_name.file?
+    next paths_and_file_names << { path_name.to_s => nil }  if path_name.file?
 
     # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
-    paths_and_file_names[path_name.to_s.to_sym] = Dir.glob('*', flags, base: path_name)
+    paths_and_file_names << { path_name.to_s => Dir.glob('*', flags, base: path_name) }
   end
 
   paths_and_file_names
