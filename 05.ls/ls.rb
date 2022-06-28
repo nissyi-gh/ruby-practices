@@ -5,7 +5,15 @@ require 'pathname'
 require 'optparse'
 DEFAULT_COLUMN_COUNT = 3
 
-def ls_command_simulate_without_option(path)
+def simulate_ls_command(path, params)
+  if params[:a]
+    with_all_option
+  else
+    without_option(path)
+  end
+end
+
+def without_option(path)
   path_name = Pathname.new(path)
   return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
 
@@ -20,6 +28,11 @@ def ls_command_simulate_without_option(path)
 
   output_style_file_names = format_file_names(file_names, list_height)
   print_file_names(list_height, output_style_file_names, file_name_width)
+end
+
+def with_all_option
+  # 後ほど実装
+
 end
 
 def parse_command_option
@@ -78,5 +91,4 @@ end
 
 path = ARGV[0] || '.'
 params = parse_command_option
-p params
-ls_command_simulate_without_option(path)
+simulate_ls_command(path, params)
