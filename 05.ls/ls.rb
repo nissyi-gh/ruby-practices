@@ -41,8 +41,23 @@ def parse_command_option
 
   opt.on('-a', params) {|v| params[:a] = true }
 
-  opt.parse!
+  opt.order!
   params
+end
+
+def parse_path
+  path_names = []
+  ARGV.each do |path|
+    path_name = Pathname.new(path)
+
+    if path_name.exist?
+      path_names << path_name
+    else
+      puts "ls: #{path_name}: No such file or directory"
+    end
+  end
+
+  path_names.sort
 end
 
 def valid_path_name?(path_name)
@@ -89,6 +104,6 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
   end
 end
 
-path = ARGV[0] || '.'
 params = parse_command_option
-simulate_ls_command(path, params)
+path_names = parse_path
+# simulate_ls_command(path, params)
