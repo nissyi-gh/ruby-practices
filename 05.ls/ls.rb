@@ -6,15 +6,11 @@ require 'optparse'
 DEFAULT_COLUMN_COUNT = 3
 CONSOLE_WIDTH = IO.console_size[1]
 
-def simulate_ls_command(path_names, params)
-  path_names.each do |path_name|
-    file_names = params[:a] ? Dir.entries(path_name).sort : Dir.glob('*', base: path_name)
-    next if file_names.empty?
+def main
+  params = parse_command_option
+  path_names = parse_path
 
-    puts "#{path_name}:" if path_names.size > 1
-    print_file_names(file_names)
-    puts unless path_name == path_names.last
-  end
+  simulate_ls_command(path_names, params)
 end
 
 def parse_command_option
@@ -43,6 +39,17 @@ def parse_path
   end
 
   path_names.sort
+end
+
+def simulate_ls_command(path_names, params)
+  path_names.each do |path_name|
+    file_names = params[:a] ? Dir.entries(path_name).sort : Dir.glob('*', base: path_name)
+    next if file_names.empty?
+
+    puts "#{path_name}:" if path_names.size > 1
+    print_file_names(file_names)
+    puts unless path_name == path_names.last
+  end
 end
 
 def configure_column_count(file_name_width)
@@ -83,6 +90,4 @@ def print_file_names(file_names)
   end
 end
 
-params = parse_command_option
-path_names = parse_path
-simulate_ls_command(path_names, params)
+main
