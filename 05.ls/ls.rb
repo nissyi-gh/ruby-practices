@@ -15,18 +15,21 @@ def simulate_ls_command(path_names, params)
 end
 
 def without_option(path_names)
-  paths_and_file_names = load_file_names(path_names)
-  binding.irb
-  return if file_names.empty?
-
   console_width = IO.console_size[1]
 
-  file_name_width = file_names.map(&:length).max
-  column_count = configure_column_count(file_name_width, console_width)
-  list_height = (file_names.size.to_f / column_count).ceil
+  path_names.each_with_index do |path_name, index|
+    puts "#{path_name}:" if path_names.size > 1
 
-  output_style_file_names = format_file_names(file_names, list_height)
-  print_file_names(list_height, output_style_file_names, file_name_width)
+    file_names = load_file_names(path_name)
+
+    next if file_names.empty?
+
+    file_name_width = file_names.map(&:length).max
+    column_count = configure_column_count(file_name_width, console_width)
+    list_height = (file_names.size.to_f / column_count).ceil
+    output_style_file_names = format_file_names(file_names, list_height)
+    print_file_names(list_height, output_style_file_names, file_name_width)
+  end
 end
 
 def with_all_option
@@ -63,17 +66,9 @@ def valid_path_name?(path_name)
   path_name.exist?
 end
 
-def load_file_names(path_names, flags = 0)
-  paths_and_file_names = []
-
-  path_names.each do |path_name|
-    next paths_and_file_names << { path_name.to_s => nil }  if path_name.file?
-
-    # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
-    paths_and_file_names << { path_name.to_s => Dir.glob('*', flags, base: path_name) }
-  end
-
-  paths_and_file_names
+def load_file_names(path_name, flags = 0)
+  # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
+  Dir.glob('*', flags, base: path_name)
 end
 
 def configure_column_count(file_name_width, console_width)
