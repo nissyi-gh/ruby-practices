@@ -26,7 +26,7 @@ end
 def parse_path
   path_names = []
 
-  return ['.'] if ARGV.empty?
+  return [Pathname.new('.')] if ARGV.empty?
 
   ARGV.each do |path|
     path_name = Pathname.new(path)
