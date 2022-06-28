@@ -5,19 +5,18 @@ require 'pathname'
 require 'optparse'
 DEFAULT_COLUMN_COUNT = 3
 
-def simulate_ls_command(path, params)
+
+def simulate_ls_command(path_names, params)
   if params[:a]
     with_all_option
   else
-    without_option(path)
+    without_option(path_names)
   end
 end
 
-def without_option(path)
-  path_name = Pathname.new(path)
-  return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
-
-  file_names = load_file_names(path_name)
+def without_option(path_names)
+  paths_and_file_names = load_file_names(path_names)
+  binding.irb
   return if file_names.empty?
 
   console_width = IO.console_size[1]
@@ -64,11 +63,17 @@ def valid_path_name?(path_name)
   path_name.exist?
 end
 
-def load_file_names(path_name, flags = 0)
-  return [path_name.to_s] if path_name.file?
+def load_file_names(path_names, flags = 0)
+  paths_and_file_names = {}
 
-  # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
-  Dir.glob('*', flags, base: path_name)
+  path_names.each do |path_name|
+    next paths_and_file_names[path_name.to_s.to_sym] = nil if path_name.file?
+
+    # この先 ls -aなどで隠しファイルも表示できるようflagsを受け取れるようにしておく
+    paths_and_file_names[path_name.to_s.to_sym] = Dir.glob('*', flags, base: path_name)
+  end
+
+  paths_and_file_names
 end
 
 def configure_column_count(file_name_width, console_width)
@@ -106,4 +111,4 @@ end
 
 params = parse_command_option
 path_names = parse_path
-# simulate_ls_command(path, params)
+simulate_ls_command(path_names, params)
