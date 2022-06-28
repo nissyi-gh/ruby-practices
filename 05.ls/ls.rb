@@ -43,6 +43,8 @@ end
 
 def simulate_ls_command(path_names, params)
   path_names.each do |path_name|
+    next puts path_name.to_s if path_name.file?
+
     file_names = params[:a] ? Dir.entries(path_name).sort : Dir.glob('*', base: path_name)
     next if file_names.empty?
 
