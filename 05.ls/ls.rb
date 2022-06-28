@@ -2,6 +2,7 @@
 
 require 'io/console/size'
 require 'pathname'
+require 'optparse'
 DEFAULT_COLUMN_COUNT = 3
 
 def ls_command_simulate_without_option(path)
@@ -19,6 +20,16 @@ def ls_command_simulate_without_option(path)
 
   output_style_file_names = format_file_names(file_names, list_height)
   print_file_names(list_height, output_style_file_names, file_name_width)
+end
+
+def parse_command_option
+  params = Hash.new
+  opt = OptionParser.new
+
+  opt.on('-a', params) {|v| params[:a] = true }
+
+  opt.parse!
+  params
 end
 
 def valid_path_name?(path_name)
@@ -66,4 +77,6 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
 end
 
 path = ARGV[0] || '.'
+params = parse_command_option
+p params
 ls_command_simulate_without_option(path)
