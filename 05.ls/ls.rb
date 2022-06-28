@@ -8,7 +8,7 @@ DEFAULT_COLUMN_COUNT = 3
 
 def simulate_ls_command(path_names, params)
   if params[:a]
-    with_all_option
+    with_all_option(path_names)
   else
     without_option(path_names)
   end
@@ -32,9 +32,24 @@ def without_option(path_names)
   end
 end
 
-def with_all_option
-  # 後ほど実装
+def with_all_option(path_names)
+  console_width = IO.console_size[1]
 
+  path_names.each_with_index do |path_name, index|
+    puts "#{path_name}:" if path_names.size > 1
+
+    file_names = Dir.entries(path_name).sort
+
+    next if file_names.empty?
+
+    file_name_width = file_names.map(&:length).max
+    column_count = configure_column_count(file_name_width, console_width)
+    list_height = (file_names.size.to_f / column_count).ceil
+    output_style_file_names = format_file_names(file_names, list_height)
+    print_file_names(list_height, output_style_file_names, file_name_width)
+
+    puts unless path_name == path_names.last
+  end
 end
 
 def parse_command_option
