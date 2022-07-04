@@ -18,6 +18,7 @@ def parse_command_option
   opt = OptionParser.new
 
   opt.on('-a', params) { params[:a] = true }
+  opt.on('-r', params) { params[:r] = true }
 
   opt.order!
   params
