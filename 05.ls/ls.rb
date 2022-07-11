@@ -11,7 +11,26 @@ def main
   params = {}
 
   parse_option(params)
+  path_names = parse_path
   ls_command_simulate_without_option(path)
+end
+
+def parse_path
+  path_names = []
+
+  return [Pathname.new('.')] if ARGV.empty?
+
+  ARGV.each do |path|
+    path_name = Pathname.new(path)
+
+    if path_name.exist?
+      path_names << path_name
+    else
+      puts "ls: #{path_name}: No such file or directory"
+    end
+  end
+
+  path_names.sort
 end
 
 def ls_command_simulate_without_option(path)
