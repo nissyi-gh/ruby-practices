@@ -109,6 +109,8 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
 end
 
 def with_l_option(path_names)
+  total_size = 0
+
   path_names.each do |path_name|
     file_names = load_file_names(path_name)
 
@@ -116,9 +118,11 @@ def with_l_option(path_names)
       file_stat = File.stat("#{path_name}/#{file_name}")
       etc_password = Etc.getpwuid(file_stat.uid)
       etc_group = Etc.getgrgid(file_stat.gid)
+      total_size += file_stat.blocks
       puts "#{format_file_type(file_stat.ftype)} #{file_stat.nlink} #{etc_password.name} #{etc_group.name} #{file_stat.mtime.strftime('%_m %_d %H:%M')} #{file_name}"
     end
   end
+  puts "total #{total_size}"
 end
 
 def format_file_type(file_type)
