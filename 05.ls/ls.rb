@@ -6,6 +6,14 @@ require 'etc'
 require 'optparse'
 DEFAULT_COLUMN_COUNT = 3
 
+def main
+  path = ARGV[0] || '.'
+  params = {}
+
+  parse_option(params)
+  ls_command_simulate_without_option(path)
+end
+
 def ls_command_simulate_without_option(path)
   path_name = Pathname.new(path)
   return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
@@ -75,7 +83,4 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
   end
 end
 
-path = ARGV[0] || '.'
-params = {}
-parse_option(params)
-ls_command_simulate_without_option(path)
+main
