@@ -13,9 +13,10 @@ def main
   path_names = parse_path
 
   if params[:l]
-    with_l_option
+    with_l_option(path_names)
   else
-    ls_command_simulate_without_option(path)
+    # 後でpath_nameから実行できるようにする
+    # ls_command_simulate_without_option(path)
   end
 end
 
