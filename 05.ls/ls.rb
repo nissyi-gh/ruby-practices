@@ -7,12 +7,16 @@ require 'optparse'
 DEFAULT_COLUMN_COUNT = 3
 
 def main
-  path = ARGV[0] || '.'
   params = {}
 
   parse_option(params)
   path_names = parse_path
-  ls_command_simulate_without_option(path)
+
+  if params[:l]
+    with_l_option
+  else
+    ls_command_simulate_without_option(path)
+  end
 end
 
 def parse_path
@@ -100,6 +104,9 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
     end
     puts
   end
+end
+
+def with_l_option
 end
 
 main
