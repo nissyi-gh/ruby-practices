@@ -117,12 +117,17 @@ def with_l_option(path_names)
     file_names = load_file_names(path_name)
 
     file_names.each do |file_name|
+      file_status = []
       file_stat = File.stat("#{path_name}/#{file_name}")
       total_size += file_stat.blocks
 
-      etc_password = Etc.getpwuid(file_stat.uid)
-      etc_group = Etc.getgrgid(file_stat.gid)
-      outputs << "#{format_file_type(file_stat.ftype)} #{file_stat.nlink} #{etc_password.name} #{etc_group.name} #{file_stat.mtime.strftime('%_m %_d %H:%M')} #{file_name}"
+      file_status << format_file_type(file_stat.ftype)
+      file_status << file_stat.nlink
+      file_status << Etc.getpwuid(file_stat.uid).name
+      file_status << Etc.getgrgid(file_stat.gid).name
+      file_status << file_stat.mtime.strftime('%_m %_d %H:%M')
+      file_status << file_name
+      outputs << file_status.join(' ')
     end
   end
   puts "total #{total_size}"
