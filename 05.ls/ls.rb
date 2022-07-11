@@ -4,6 +4,7 @@ require 'io/console/size'
 require 'pathname'
 require 'etc'
 require 'optparse'
+require 'time'
 DEFAULT_COLUMN_COUNT = 3
 
 def main
@@ -115,7 +116,7 @@ def with_l_option(path_names)
       file_stat = File.stat("#{path_name}/#{file_name}")
       etc_password = Etc.getpwuid(file_stat.uid)
       etc_group = Etc.getgrgid(file_stat.gid)
-      puts "#{etc_password.name} #{etc_group.name}"
+      puts "#{etc_password.name} #{etc_group.name} #{file_stat.mtime.strftime('%_m %_d %H:%M')} #{file_name}"
     end
   end
 end
