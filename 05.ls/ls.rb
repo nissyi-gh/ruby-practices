@@ -116,9 +116,22 @@ def with_l_option(path_names)
       file_stat = File.stat("#{path_name}/#{file_name}")
       etc_password = Etc.getpwuid(file_stat.uid)
       etc_group = Etc.getgrgid(file_stat.gid)
-      puts "#{file_stat.nlink} #{etc_password.name} #{etc_group.name} #{file_stat.mtime.strftime('%_m %_d %H:%M')} #{file_name}"
+      puts "#{format_file_type(file_stat.ftype)} #{file_stat.nlink} #{etc_password.name} #{etc_group.name} #{file_stat.mtime.strftime('%_m %_d %H:%M')} #{file_name}"
     end
   end
+end
+
+def format_file_type(file_type)
+  file_types = {
+    'file' => '-',
+    'directory' => 'd',
+    'characterSpecial' => 'c',
+    'blockSpecial' => 'b',
+    'fifo' => 'p',
+    'link' => 'l'
+  }
+
+  file_types[file_type]
 end
 
 main
