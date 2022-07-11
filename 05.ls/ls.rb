@@ -107,7 +107,17 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
   end
 end
 
-def with_l_option
+def with_l_option(path_names)
+  path_names.each do |path_name|
+    file_names = load_file_names(path_name)
+
+    file_names.each do |file_name|
+      file_stat = File.stat("#{path_name}/#{file_name}")
+      etc_password = Etc.getpwuid(file_stat.uid)
+      etc_group = Etc.getgrgid(file_stat.gid)
+      puts "#{etc_password.name} #{etc_group.name}"
+    end
+  end
 end
 
 main
