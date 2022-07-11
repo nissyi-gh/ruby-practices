@@ -2,6 +2,7 @@
 
 require 'io/console/size'
 require 'pathname'
+require 'etc'
 DEFAULT_COLUMN_COUNT = 3
 
 def ls_command_simulate_without_option(path)
