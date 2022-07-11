@@ -110,19 +110,23 @@ end
 
 def with_l_option(path_names)
   total_size = 0
+  outputs = []
 
   path_names.each do |path_name|
+    outputs << "#{path_name}:" if path_names.size >= 2
     file_names = load_file_names(path_name)
 
     file_names.each do |file_name|
       file_stat = File.stat("#{path_name}/#{file_name}")
+      total_size += file_stat.blocks
+
       etc_password = Etc.getpwuid(file_stat.uid)
       etc_group = Etc.getgrgid(file_stat.gid)
-      total_size += file_stat.blocks
-      puts "#{format_file_type(file_stat.ftype)} #{file_stat.nlink} #{etc_password.name} #{etc_group.name} #{file_stat.mtime.strftime('%_m %_d %H:%M')} #{file_name}"
+      outputs << "#{format_file_type(file_stat.ftype)} #{file_stat.nlink} #{etc_password.name} #{etc_group.name} #{file_stat.mtime.strftime('%_m %_d %H:%M')} #{file_name}"
     end
   end
   puts "total #{total_size}"
+  puts outputs
 end
 
 def format_file_type(file_type)
