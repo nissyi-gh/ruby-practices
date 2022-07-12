@@ -14,7 +14,7 @@ def main
   path_names = parse_path
 
   if params[:l]
-    with_l_option(path_names)
+    ls_command_simulate_with_l_option(path_names)
   else
     ls_command_simulate_without_option(path_names)
   end
@@ -160,7 +160,7 @@ def convert_permission(modes)
   outputs
 end
 
-def with_l_option(path_names)
+def ls_command_simulate_with_l_option(path_names)
   path_names.each do |path_name|
     outputs = []
     symbolic_link_width = 0
