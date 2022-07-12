@@ -186,8 +186,6 @@ end
 def ls_command_simulate_without_option(path_names)
   path_names.each do |path|
     path_name = Pathname.new(path)
-    return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
-
     file_names = load_file_names(path_name)
     next if file_names.empty?
 
