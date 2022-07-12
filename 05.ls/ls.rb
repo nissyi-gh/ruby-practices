@@ -109,13 +109,11 @@ def print_file_names(list_height, output_style_file_names, file_name_width)
 end
 
 def with_l_option(path_names)
-  total_size = 0
-  outputs = []
-  symbolic_link_width = 0
-  size_width = 0
-
   path_names.each do |path_name|
-    outputs << "#{path_name}:" if path_names.size >= 2
+    outputs = []
+    symbolic_link_width = 0
+    size_width = 0
+    total_size = 0
     file_names = load_file_names(path_name)
 
     file_names.each do |file_name|
@@ -126,9 +124,11 @@ def with_l_option(path_names)
       symbolic_link_width = [outputs.last[:symbolic_link].digits.size, symbolic_link_width].max
       size_width = [outputs.last[:size].digits.size, size_width].max
     end
-  end
 
-  print_details(total_size, outputs, symbolic_link_width, size_width)
+    puts "#{path_name}:" if path_names.size >= 2
+    print_details(total_size, outputs, symbolic_link_width, size_width)
+    puts if path_names.size >= 2 && path_name != path_names.last
+  end
 end
 
 def parse_file_property(file_stat, file_name, path_name)
