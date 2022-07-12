@@ -119,9 +119,9 @@ def with_l_option(path_names)
     file_names = load_file_names(path_name)
 
     file_names.each do |file_name|
-      file_stat = File.stat("#{path_name}/#{file_name}")
+      file_stat = File.lstat("#{path_name}/#{file_name}")
       total_size += file_stat.blocks
-      outputs << parse_file_property(file_stat, file_name)
+      outputs << parse_file_property(file_stat, file_name, path_name)
 
       symbolic_link_width = [outputs.last[:symbolic_link].digits.size, symbolic_link_width].max
       size_width = [outputs.last[:size].digits.size, size_width].max
@@ -131,7 +131,7 @@ def with_l_option(path_names)
   print_details(total_size, outputs, symbolic_link_width, size_width)
 end
 
-def parse_file_property(file_stat, file_name)
+def parse_file_property(file_stat, file_name, path_name)
   file_properties = {}
 
   file_properties[:file_type] = format_file_type(file_stat.ftype)
@@ -142,7 +142,7 @@ def parse_file_property(file_stat, file_name)
   file_properties[:size] = file_stat.size
   file_properties[:mtime] = file_stat.mtime.strftime('%_2m %_d %H:%M')
   file_properties[:name] = file_name
-
+  file_properties[:read_link] = File.readlink("#{path_name}/#{file_name}") if file_stat.ftype == 'link'
   file_properties
 end
 
@@ -163,7 +163,8 @@ def print_details(total_size, outputs, symbolic_link_width, size_width)
     print ' '
     print file_properties[:mtime]
     print ' '
-    puts file_properties[:name]
+    print file_properties[:name]
+    puts file_properties[:read_link] ? " -> #{file_properties[:read_link]}" : ''
   end
 end
 
