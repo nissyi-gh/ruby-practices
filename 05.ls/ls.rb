@@ -121,7 +121,8 @@ def with_l_option(path_names)
       file_stat = File.stat("#{path_name}/#{file_name}")
       total_size += file_stat.blocks
 
-      file_properties << format_file_type(file_stat.ftype)
+      # ファイルタイプとパーミッションの間は空白がないので、直接文字列同士を結合する
+      file_properties << format_file_type(file_stat.ftype) + convert_permission(file_stat.mode.digits(8)[0..2].reverse)
       file_properties << file_stat.nlink
       file_properties << Etc.getpwuid(file_stat.uid).name
       file_properties << Etc.getgrgid(file_stat.gid).name
@@ -147,4 +148,23 @@ def format_file_type(file_type)
   file_types[file_type]
 end
 
+def convert_permission(modes)
+  outputs = ''
+  permissions = {
+    7 => 'rwx',
+    6 => 'rw-',
+    5 => 'r-x',
+    4 => 'r--',
+    3 => '-wx',
+    2 => '-w-',
+    1 => '--x',
+    0 => '---'
+  }
+
+  modes.each do |mode|
+    outputs += permissions[mode]
+  end
+
+  outputs
+end
 main
