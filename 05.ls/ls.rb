@@ -119,26 +119,31 @@ def with_l_option(path_names)
     file_names = load_file_names(path_name)
 
     file_names.each do |file_name|
-      file_properties = {}
       file_stat = File.stat("#{path_name}/#{file_name}")
       total_size += file_stat.blocks
-
-      file_properties[:file_type] = format_file_type(file_stat.ftype)
-      file_properties[:permission] = convert_permission(file_stat.mode.digits(8)[0..2].reverse)
-      file_properties[:symbolic_link] = file_stat.nlink
-      file_properties[:owner_name] = Etc.getpwuid(file_stat.uid).name
-      file_properties[:group_name] = Etc.getgrgid(file_stat.gid).name
-      file_properties[:size] = file_stat.size
-      file_properties[:mtime] = file_stat.mtime.strftime('%_2m %_d %H:%M')
-      file_properties[:name] = file_name
+      outputs << parse_file_property(file_stat, file_name)
 
       symbolic_link_width = file_properties[:symbolic_link].digits.size if symbolic_link_width < file_properties[:symbolic_link].digits.size
       size_width = file_properties[:size].digits.size if size_width < file_properties[:size].digits.size
-      outputs << file_properties
     end
   end
 
   print_details(total_size, outputs, symbolic_link_width, size_width)
+end
+
+def parse_file_property(file_stat, file_name)
+  file_properties = {}
+
+  file_properties[:file_type] = format_file_type(file_stat.ftype)
+  file_properties[:permission] = convert_permission(file_stat.mode.digits(8)[0..2].reverse)
+  file_properties[:symbolic_link] = file_stat.nlink
+  file_properties[:owner_name] = Etc.getpwuid(file_stat.uid).name
+  file_properties[:group_name] = Etc.getgrgid(file_stat.gid).name
+  file_properties[:size] = file_stat.size
+  file_properties[:mtime] = file_stat.mtime.strftime('%_2m %_d %H:%M')
+  file_properties[:name] = file_name
+
+  file_properties
 end
 
 def print_details(total_size, outputs, symbolic_link_width, size_width)
