@@ -16,8 +16,7 @@ def main
   if params[:l]
     with_l_option(path_names)
   else
-    # 後でpath_nameから実行できるようにする
-    # ls_command_simulate_without_option(path)
+    ls_command_simulate_without_option(path_names)
   end
 end
 
@@ -39,21 +38,26 @@ def parse_path
   path_names.sort
 end
 
-def ls_command_simulate_without_option(path)
-  path_name = Pathname.new(path)
-  return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
+def ls_command_simulate_without_option(path_names)
+  path_names.each do |path|
+    path_name = Pathname.new(path)
+    return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
 
-  file_names = load_file_names(path_name)
-  return if file_names.empty?
+    file_names = load_file_names(path_name)
+    return if file_names.empty?
 
-  console_width = IO.console_size[1]
+    console_width = IO.console_size[1]
 
-  file_name_width = file_names.map(&:length).max
-  column_count = configure_column_count(file_name_width, console_width)
-  list_height = (file_names.size.to_f / column_count).ceil
+    file_name_width = file_names.map(&:length).max
+    column_count = configure_column_count(file_name_width, console_width)
+    list_height = (file_names.size.to_f / column_count).ceil
 
-  output_style_file_names = format_file_names(file_names, list_height)
-  print_file_names(list_height, output_style_file_names, file_name_width)
+    output_style_file_names = format_file_names(file_names, list_height)
+
+    puts "#{path_name}:" if path_names.size >= 2
+    print_file_names(list_height, output_style_file_names, file_name_width)
+    puts if path_names.size >= 2 && path_name != path_names.last
+  end
 end
 
 def parse_option(params)
