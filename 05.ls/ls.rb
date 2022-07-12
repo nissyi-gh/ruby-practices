@@ -123,8 +123,8 @@ def with_l_option(path_names)
       total_size += file_stat.blocks
       outputs << parse_file_property(file_stat, file_name)
 
-      symbolic_link_width = file_properties[:symbolic_link].digits.size if symbolic_link_width < file_properties[:symbolic_link].digits.size
-      size_width = file_properties[:size].digits.size if size_width < file_properties[:size].digits.size
+      symbolic_link_width = [outputs.last[:symbolic_link].digits.size, symbolic_link_width].max
+      size_width = [outputs.last[:size].digits.size, size_width].max
     end
   end
 
