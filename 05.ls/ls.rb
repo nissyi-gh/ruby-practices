@@ -111,29 +111,55 @@ end
 def with_l_option(path_names)
   total_size = 0
   outputs = []
+  symbolic_link_width = 0
+  size_width = 0
 
   path_names.each do |path_name|
     outputs << "#{path_name}:" if path_names.size >= 2
     file_names = load_file_names(path_name)
 
     file_names.each do |file_name|
-      file_properties = []
+      file_properties = {}
       file_stat = File.stat("#{path_name}/#{file_name}")
       total_size += file_stat.blocks
 
-      # ファイルタイプとパーミッションの間は空白がないので、直接文字列同士を結合する
-      file_properties << format_file_type(file_stat.ftype) + convert_permission(file_stat.mode.digits(8)[0..2].reverse)
-      file_properties << file_stat.nlink
-      file_properties << Etc.getpwuid(file_stat.uid).name
-      file_properties << Etc.getgrgid(file_stat.gid).name
-      file_properties << file_stat.size
-      file_properties << file_stat.mtime.strftime('%_m %_d %H:%M')
-      file_properties << file_name
+      file_properties[:file_type] = format_file_type(file_stat.ftype)
+      file_properties[:permission] = convert_permission(file_stat.mode.digits(8)[0..2].reverse)
+      file_properties[:symbolic_link] = file_stat.nlink
+      file_properties[:owner_name] = Etc.getpwuid(file_stat.uid).name
+      file_properties[:group_name] = Etc.getgrgid(file_stat.gid).name
+      file_properties[:size] = file_stat.size
+      file_properties[:mtime] = file_stat.mtime.strftime('%_2m %_d %H:%M')
+      file_properties[:name] = file_name
+
+      symbolic_link_width = file_properties[:symbolic_link].digits.size if symbolic_link_width < file_properties[:symbolic_link].digits.size
+      size_width = file_properties[:size].digits.size if size_width < file_properties[:size].digits.size
       outputs << file_properties
     end
   end
+
+  print_details(total_size, outputs, symbolic_link_width, size_width)
+end
+
+def print_details(total_size, outputs, symbolic_link_width, size_width)
   puts "total #{total_size}"
-  puts outputs
+
+  outputs.each do |file_properties|
+    print file_properties[:file_type]
+    print file_properties[:permission]
+    print '  '
+    print format("%#{symbolic_link_width}d", file_properties[:symbolic_link])
+    print ' '
+    print file_properties[:owner_name]
+    print '  '
+    print file_properties[:group_name]
+    print '  '
+    print format("%#{size_width}d", file_properties[:size])
+    print ' '
+    print file_properties[:mtime]
+    print ' '
+    puts file_properties[:name]
+  end
 end
 
 def format_file_type(file_type)
