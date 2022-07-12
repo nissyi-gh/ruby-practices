@@ -93,7 +93,7 @@ end
 def parse_file_property(file_stat, file_name, path_name)
   file_properties = {}
 
-  file_properties[:file_type] = format_file_type(file_stat.ftype)
+  file_properties[:file_type] = convert_file_type(file_stat.ftype)
   file_properties[:permission] = convert_permission(file_stat.mode.digits(8)[0..2].reverse)
   file_properties[:symbolic_link] = file_stat.nlink
   file_properties[:owner_name] = Etc.getpwuid(file_stat.uid).name
@@ -127,7 +127,7 @@ def print_details(total_size, outputs, symbolic_link_width, size_width)
   end
 end
 
-def format_file_type(file_type)
+def convert_file_type(file_type)
   file_types = {
     'file' => '-',
     'directory' => 'd',
