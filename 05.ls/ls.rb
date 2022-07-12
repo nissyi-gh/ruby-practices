@@ -44,7 +44,7 @@ def ls_command_simulate_without_option(path_names)
     return puts "ls: #{path_name}: No such file or directory" unless valid_path_name?(path_name)
 
     file_names = load_file_names(path_name)
-    return if file_names.empty?
+    next if file_names.empty?
 
     console_width = IO.console_size[1]
 
