@@ -126,6 +126,7 @@ def with_l_option(path_names)
       file_properties << file_stat.nlink
       file_properties << Etc.getpwuid(file_stat.uid).name
       file_properties << Etc.getgrgid(file_stat.gid).name
+      file_properties << file_stat.size
       file_properties << file_stat.mtime.strftime('%_m %_d %H:%M')
       file_properties << file_name
       outputs << file_properties.join(' ')
