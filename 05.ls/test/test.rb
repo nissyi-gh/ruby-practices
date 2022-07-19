@@ -72,37 +72,37 @@ class TestLs < MiniTest::Test
     assert_equal @LR_OPTIONS, sort_options_hash
   end
 
-  def set_alr_option_is_set?
+  def test_alr_option_is_set?
     set_alr_options
     Ls.main
     assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
-  def set_arl_option_is_set?
+  def test_arl_option_is_set?
     set_arl_options
     Ls.main
     assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
-  def set_lar_option_is_set?
+  def test_lar_option_is_set?
     set_lar_options
     Ls.main
     assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
-  def set_lra_option_is_set?
+  def test_lra_option_is_set?
     set_lra_options
     Ls.main
     assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
-  def set_ral_option_is_set?
+  def test_ral_option_is_set?
     set_ral_options
     Ls.main
     assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
-  def set_rla_option_is_set?
+  def test_rla_option_is_set?
     set_rla_options
     Ls.main
     assert_equal @ALR_OPTIONS, sort_options_hash
