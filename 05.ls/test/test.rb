@@ -16,6 +16,20 @@ class TestLs < MiniTest::Test
     @AR_OPTIONS = @A_OPTION.merge(@R_OPTION)
     @LR_OPTIONS = @L_OPTION.merge(@R_OPTION)
     @ALR_OPTIONS = @AL_OPTIONS.merge(@R_OPTION)
+
+    @RESULT_CURRENT_DIRECTORY_WITHOUT_OPTION = "ls.rb"
+    @RESULT_ROOT_DIRECTORY_WITHOUT_OPTION = <<~RESULT
+    Applications  Library       Public
+    Desktop       Movies        count.sh
+    Documents     Music         test.txt
+    Downloads     Pictures      works
+    RESULT
+    @RESULT_PARENT_DIRECTORY_WITHOUT_OPTION = <<~RESULT
+    01.fizzbuzz        05.ls              09.wc_object
+    02.calendar        06.wc              README.md
+    03.rake            07.bowling_object
+    04.bowling         08.ls_object
+    RESULT
   end
 
   def test_a_option_is_set?
@@ -106,5 +120,10 @@ class TestLs < MiniTest::Test
     set_rla_options
     Ls.main
     assert_equal @ALR_OPTIONS, sort_options_hash
+  end
+
+  def test_ls_command_without_option_in_current_directory
+    set_path_current_directory
+    assert_equal @RESULT_CURRENT_DIRECTORY_WITHOUT_OPTION, Ls.main
   end
 end
