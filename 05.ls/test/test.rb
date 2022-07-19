@@ -124,6 +124,17 @@ class TestLs < MiniTest::Test
     assert_equal @alr_options, sort_options_hash
   end
 
+  def test_path_name_equal_current_directory
+    set_path_current_directory
+    assert_equal ['.'], Ls.path_names
+  end
+
+  def test_path_names_equal_any_paths
+    set_path_current_directory
+    set_path_parent_directory
+    assert_equal ['.', '..'], Ls.path_names
+  end
+
   def test_ls_command_without_option_in_current_directory
     set_path_current_directory
     assert_equal @result_current_directory_without_option, Ls.main
