@@ -58,4 +58,8 @@ module TestHelpers
   def set_rla_options
     ARGV << '-rla'
   end
+
+  def sort_options_hash
+    Ls.get_options.sort.to_h
+  end
 end

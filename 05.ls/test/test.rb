@@ -7,6 +7,8 @@ class TestLs < MiniTest::Test
 
   def setup
     ARGV.clear
+    Ls.clear_options
+
     @A_OPTION = { a: true }
     @L_OPTION = { l: true }
     @R_OPTION = { r: true }
@@ -18,76 +20,91 @@ class TestLs < MiniTest::Test
 
   def test_a_option_is_set?
     set_a_option
-    assert_equal @A_OPTION, Ls.options
+    Ls.main
+    assert_equal @A_OPTION, sort_options_hash
   end
 
   def test_l_option_is_set?
     set_l_option
-    assert_equal @L_OPTION, Ls.options
+    Ls.main
+    assert_equal @L_OPTION, sort_options_hash
   end
 
   def test_r_option_is_set?
     set_r_option
-    assert_equal @R_OPTION, Ls.options
+    Ls.main
+    assert_equal @R_OPTION, sort_options_hash
   end
 
   def test_al_option_is_set?
     set_al_options
-    assert_equal @AL_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @AL_OPTIONS, sort_options_hash
   end
 
   def test_ar_option_is_set?
     set_ar_options
-    assert_equal @AR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @AR_OPTIONS, sort_options_hash
   end
 
   def test_la_option_is_set?
     set_la_options
-    assert_equal @AL_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @AL_OPTIONS, sort_options_hash
   end
 
   def test_lr_option_is_set?
     set_lr_options
-    assert_equal @LR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @LR_OPTIONS, sort_options_hash
   end
 
   def test_ra_option_is_set?
     set_ra_options
-    assert_equal @AR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @AR_OPTIONS, sort_options_hash
   end
 
   def test_rl_option_is_set?
     set_rl_options
-    assert_equal @LR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @LR_OPTIONS, sort_options_hash
   end
 
   def set_alr_option_is_set?
     set_alr_options
-    assert_equal @ALR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
   def set_arl_option_is_set?
     set_arl_options
-    assert_equal @ALR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
   def set_lar_option_is_set?
     set_lar_options
-    assert_equal @ALR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
   def set_lra_option_is_set?
     set_lra_options
-    assert_equal @ALR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
   def set_ral_option_is_set?
     set_ral_options
-    assert_equal @ALR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @ALR_OPTIONS, sort_options_hash
   end
 
   def set_rla_option_is_set?
     set_rla_options
-    assert_equal @ALR_OPTIONS, Ls.options
+    Ls.main
+    assert_equal @ALR_OPTIONS, sort_options_hash
   end
 end
