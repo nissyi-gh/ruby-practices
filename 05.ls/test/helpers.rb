@@ -13,6 +13,10 @@ module TestHelpers
     ARGV << '..'
   end
 
+  def set_path_not_exist_directory
+    ARGV << 'hoge'
+  end
+
   def set_a_option
     ARGV << '-a'
   end
