@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
 require 'optparse'
 
 class Ls
   @options = {}
 
   class << self
+    attr_reader :options
+
     def main
       parse_option
     end
@@ -14,10 +18,6 @@ class Ls
       opt.on('-r')
       opt.on('-l')
       opt.parse!(ARGV, into: @options)
-    end
-
-    def get_options
-      @options
     end
 
     def clear_options

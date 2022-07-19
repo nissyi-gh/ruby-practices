@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TestHelpers
   def set_path_current_directory
     ARGV << '.'
@@ -72,6 +74,6 @@ module TestHelpers
   end
 
   def sort_options_hash
-    Ls.get_options.sort.to_h
+    Ls.options.sort.to_h
   end
 end
