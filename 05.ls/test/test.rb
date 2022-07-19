@@ -3,6 +3,7 @@
 require 'minitest/autorun'
 require_relative '../ls'
 require_relative './helpers'
+require 'pathname'
 
 class TestLs < MiniTest::Test
   include TestHelpers
@@ -10,6 +11,7 @@ class TestLs < MiniTest::Test
   def setup
     ARGV.clear
     Ls.clear_options
+    Ls.clear_path_names
 
     @a_option = { a: true }
     @l_option = { l: true }
@@ -126,17 +128,20 @@ class TestLs < MiniTest::Test
 
   def test_path_name_equal_current_directory
     set_path_current_directory
-    assert_equal ['.'], Ls.path_names
+    Ls.main
+    assert_equal [Pathname.new('.')], Ls.path_names
   end
 
   def test_path_names_equal_any_paths
     set_path_current_directory
     set_path_parent_directory
-    assert_equal ['.', '..'], Ls.path_names
+    Ls.main
+    assert_equal [Pathname.new('.'), Pathname.new('..')], Ls.path_names
   end
 
   def test_ls_command_without_option_in_current_directory
     set_path_current_directory
+    Ls.main
     assert_equal @result_current_directory_without_option, Ls.main
   end
 end
