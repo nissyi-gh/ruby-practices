@@ -29,11 +29,12 @@ class Ls
       ARGV.each do |path|
         path_name = Pathname.new(path)
 
-        if path_name.exist?
-          @path_names << path_name
-        else
-          puts "ls: #{path_name}: No such file or directory"
-        end
+        @path_names <<
+          if path_name.exist?
+            path_name
+          else
+            "ls: #{path_name}: No such file or directory"
+          end
       end
     end
 

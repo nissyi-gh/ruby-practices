@@ -148,6 +148,6 @@ class TestLs < MiniTest::Test
   def test_invalid_direcoty_message
     ARGV << 'hoge'
     Ls.main
-    assert_equal 'ls: hoge: No such file or directory', Ls.path_names
+    assert_equal ['ls: hoge: No such file or directory'], Ls.path_names
   end
 end
