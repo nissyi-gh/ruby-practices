@@ -18,7 +18,11 @@ class Ls
       parse_path
 
       @path_names.each do |path_name|
-        Ls.new(path_name)
+        if path_name.instance_of?(String)
+          puts path_name
+        else
+          Ls.new(path_name)
+        end
       end
     end
 

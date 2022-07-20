@@ -21,7 +21,9 @@ class TestLs < MiniTest::Test
     @lr_options = @l_option.merge(@r_option)
     @alr_options = @al_options.merge(@r_option)
 
-    @result_current_directory_without_option = 'ls.rb'
+    @result_current_directory_without_option = <<~RESULT
+      ls.rb  test   
+    RESULT
     @result_root_directory_without_option = <<~RESULT
       Applications  Library       Public
       Desktop       Movies        count.sh
@@ -141,8 +143,7 @@ class TestLs < MiniTest::Test
 
   def test_ls_command_without_option_in_current_directory
     set_path_current_directory
-    Ls.main
-    assert_equal @result_current_directory_without_option, Ls.main
+    assert_output(@result_current_directory_without_option) { Ls.main }
   end
 
   def test_not_exist_direcoty_message
