@@ -29,6 +29,18 @@ class TestLs < MiniTest::Test
       04.bowling         08.ls_object       
     RESULT
     @result_not_exist_message = "ls: hoge: No such file or directory\n"
+    @result_current_directory_with_a_option = <<~RESULT
+      .         .gitkeep  test      
+      ..        ls.rb     
+    RESULT
+    @result_parent_directory_with_a_option = <<~RESULT
+      .                  01.fizzbuzz        07.bowling_object  
+      ..                 02.calendar        08.ls_object       
+      .DS_Store          03.rake            09.wc_object       
+      .git               04.bowling         README.md          
+      .gitignore         05.ls              
+      .rubocop.yml       06.wc              
+    RESULT
   end
 
   def test_a_option_is_set?
@@ -142,6 +154,18 @@ class TestLs < MiniTest::Test
   def test_ls_command_without_option_in_parent_directory
     set_path_parent_directory
     assert_output(@result_parent_directory_without_option) { Ls.main }
+  end
+
+  def test_ls_command_with_a_option_in_current_directory
+    set_a_option
+    set_path_current_directory
+    assert_output(@result_current_directory_with_a_option) { Ls.main }
+  end
+
+  def test_ls_command_with_a_option_in_parent_directory
+    set_a_option
+    set_path_parent_directory
+    assert_output(@result_parent_directory_with_a_option) { Ls.main }
   end
 
   def test_not_exist_direcoty_message
