@@ -5,10 +5,6 @@ module TestHelpers
     ARGV << '.'
   end
 
-  def set_path_root_directory
-    ARGV << '~'
-  end
-
   def set_path_parent_directory
     ARGV << '..'
   end

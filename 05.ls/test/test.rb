@@ -24,17 +24,11 @@ class TestLs < MiniTest::Test
     @result_current_directory_without_option = <<~RESULT
       ls.rb  test   
     RESULT
-    @result_root_directory_without_option = <<~RESULT
-      Applications  Library       Public
-      Desktop       Movies        count.sh
-      Documents     Music         test.txt
-      Downloads     Pictures      works
-    RESULT
     @result_parent_directory_without_option = <<~RESULT
-      01.fizzbuzz        05.ls              09.wc_object
-      02.calendar        06.wc              README.md
-      03.rake            07.bowling_object
-      04.bowling         08.ls_object
+      01.fizzbuzz        05.ls              09.wc_object       
+      02.calendar        06.wc              README.md          
+      03.rake            07.bowling_object  
+      04.bowling         08.ls_object       
     RESULT
   end
 
@@ -144,6 +138,11 @@ class TestLs < MiniTest::Test
   def test_ls_command_without_option_in_current_directory
     set_path_current_directory
     assert_output(@result_current_directory_without_option) { Ls.main }
+  end
+
+  def test_ls_command_without_option_in_parent_directory
+    set_path_parent_directory
+    assert_output(@result_parent_directory_without_option) { Ls.main }
   end
 
   def test_not_exist_direcoty_message
