@@ -21,15 +21,14 @@ class TestLs < MiniTest::Test
     @lr_options = @l_option.merge(@r_option)
     @alr_options = @al_options.merge(@r_option)
 
-    @result_current_directory_without_option = <<~RESULT
-      ls.rb  test   
-    RESULT
+    @result_current_directory_without_option = "ls.rb  test   \n"
     @result_parent_directory_without_option = <<~RESULT
       01.fizzbuzz        05.ls              09.wc_object       
       02.calendar        06.wc              README.md          
       03.rake            07.bowling_object  
       04.bowling         08.ls_object       
     RESULT
+    @result_not_exist_message = "ls: hoge: No such file or directory\n"
   end
 
   def test_a_option_is_set?
@@ -147,8 +146,7 @@ class TestLs < MiniTest::Test
 
   def test_not_exist_direcoty_message
     set_path_not_exist_directory
-    Ls.main
-    assert_equal ['ls: hoge: No such file or directory'], Ls.path_names
+    assert_output(@result_not_exist_message) { Ls.main }
   end
 
   def test_specify_exist_directory_and_not_exist_directory
