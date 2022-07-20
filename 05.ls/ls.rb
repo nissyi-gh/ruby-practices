@@ -10,10 +10,12 @@ class Ls
   @files = []
   @column_count = 3
   @console_width = IO.console_size[1]
+  @file_name_width = 0
+  @list_height = 0
 
   class << self
     attr_reader :options, :path_names, :column_count
-    attr_accessor :files, :console_width
+    attr_accessor :files, :console_width, :list_height
 
     def main
       parse_option
@@ -21,6 +23,8 @@ class Ls
 
       @path_names.each do |path_name|
         load_files(path_name)
+        configure_list_height
+        configure_file_name_width
         print_files
       end
     end
@@ -60,7 +64,13 @@ class Ls
     end
 
     def print_files
-      puts @files
+      @list_height.times do |row|
+        0...@column_count.times do |column|
+          index = row + column * @list_height
+          print @files[index].ljust(@file_name_width) if @files[index]
+        end
+        puts
+      end
     end
 
     def clear_options
@@ -69,6 +79,14 @@ class Ls
 
     def clear_path_names
       @path_names.clear
+    end
+
+    def configure_list_height
+      @list_height = (@files.size.to_f / @column_count).ceil
+    end
+
+    def configure_file_name_width
+      @file_name_width = @files.map(&:length).max + 2
     end
   end
 end
