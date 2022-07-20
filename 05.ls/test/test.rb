@@ -77,6 +77,11 @@ class TestLs < MiniTest::Test
     drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 09.wc_object
     -rw-rw-r--  1 yuta.onishi  staff  2648  6  6 18:27 README.md
   RESULT
+  RESULT_CURRENT_DIRECTORY_AND_NOT_EXIST_DIRECTORY_WITHOUT_OPTION = <<~RESULT
+    ls: hoge: No such file or directory
+    .:
+    lib    ls.rb  test   
+  RESULT
 
   def setup
     ARGV.clear
@@ -245,5 +250,11 @@ class TestLs < MiniTest::Test
     set_path_current_directory
     Ls.main
     assert_equal ['ls: hoge: No such file or directory', Pathname.new('.')], Ls.path_names
+  end
+
+  def test_ls_command_without_option_in_current_directory_and_not_exist_directory
+    set_path_not_exist_directory
+    set_path_current_directory
+    assert_output(RESULT_CURRENT_DIRECTORY_AND_NOT_EXIST_DIRECTORY_WITHOUT_OPTION) { Ls.main }
   end
 end
