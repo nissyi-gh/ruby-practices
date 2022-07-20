@@ -41,6 +41,26 @@ class TestLs < MiniTest::Test
       .gitignore         05.ls              
       .rubocop.yml       06.wc              
     RESULT
+
+    @result_current_directory_with_r_option = "test   ls.rb  \n"
+    @result_parent_directory_with_r_option = <<~RESULT
+      README.md          06.wc              02.calendar        
+      09.wc_object       05.ls              01.fizzbuzz        
+      08.ls_object       04.bowling         
+      07.bowling_object  03.rake            
+    RESULT
+    @result_current_directory_with_ar_option = <<~RESULT
+      test      .gitkeep  .         
+      ls.rb     ..        
+    RESULT
+    @result_parent_directory_with_ar_option = <<~RESULT
+      README.md          04.bowling         .git               
+      09.wc_object       03.rake            .DS_Store          
+      08.ls_object       02.calendar        ..                 
+      07.bowling_object  01.fizzbuzz        .                  
+      06.wc              .rubocop.yml       
+      05.ls              .gitignore         
+    RESULT
   end
 
   def test_a_option_is_set?
@@ -166,6 +186,20 @@ class TestLs < MiniTest::Test
     set_a_option
     set_path_parent_directory
     assert_output(@result_parent_directory_with_a_option) { Ls.main }
+  end
+
+  def test_ls_command_with_ar_option_in_current_directory
+    set_a_option
+    set_r_option
+    set_path_current_directory
+    assert_output(@result_current_directory_with_ar_option) { Ls.main }
+  end
+
+  def test_ls_command_with_ar_option_in_parent_directory
+    set_a_option
+    set_r_option
+    set_path_parent_directory
+    assert_output(@result_parent_directory_with_ar_option) { Ls.main }
   end
 
   def test_not_exist_direcoty_message
