@@ -8,9 +8,9 @@ require 'pathname'
 class TestLs < MiniTest::Test
   include TestHelpers
 
-  A_OPTION = { a: true }
-  L_OPTION= { l: true }
-  R_OPTION = { r: true }
+  A_OPTION = { a: true }.freeze
+  L_OPTION = { l: true }.freeze
+  R_OPTION = { r: true }.freeze
   AL_OPTIONS = A_OPTION.merge(L_OPTION)
   AR_OPTIONS = A_OPTION.merge(R_OPTION)
   LR_OPTIONS = L_OPTION.merge(R_OPTION)
