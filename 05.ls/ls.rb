@@ -26,6 +26,7 @@ class Ls
         else
           puts "#{path_name}:" if @path_names.size >= 2
           Ls.new(path_name)
+          puts if @path_names.size >= 2 && path_name != @path_names.last
         end
       end
     end
