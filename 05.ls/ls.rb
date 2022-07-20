@@ -31,6 +31,16 @@ class Ls
       end
     end
 
+    def clear_options
+      @options.clear
+    end
+
+    def clear_path_names
+      @path_names.clear
+    end
+
+    private
+
     def parse_option
       opt = OptionParser.new
       opt.on('-a')
@@ -53,30 +63,24 @@ class Ls
           end
       end
     end
-
-    def clear_options
-      @options.clear
-    end
-
-    def clear_path_names
-      @path_names.clear
-    end
   end
 
-  attr_accessor :files, :list_height, :file_name_width, :total_size, :symbolic_link_width, :size_width
+  attr_accessor :files, :list_height, :file_name_width, :total_block_size, :symbolic_link_width, :size_width
   attr_reader :path_name
 
   def initialize(path_name)
     @path_name = path_name
     @symbolic_link_width = 0
     @size_width = 0
-    @total_size = 0
+    @total_block_size = 0
     @files = load_files
     @list_height = configure_list_height
     @file_name_width = configure_file_name_width
 
     print_files
   end
+
+  private
 
   def load_files
     files =

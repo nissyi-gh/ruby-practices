@@ -8,18 +8,22 @@ module LsL
     outputs = []
     @files.each do |file|
       file_stat = File.lstat("#{@path_name}/#{file}")
-      @total_size += file_stat.blocks
+
+      @total_block_size += file_stat.blocks
       outputs << load_file_properties(file_stat, file)
+
       @symbolic_link_width = [outputs.last[:symbolic_link].digits.size, @symbolic_link_width].max
       @size_width = [outputs.last[:size].digits.size, @size_width].max
     end
 
-    puts "total #{@total_size}"
+    puts "total #{@total_block_size}"
 
     outputs.each do |output|
       print_details(output)
     end
   end
+
+  private
 
   def load_file_properties(file_stat, file)
     file_properties = {}
@@ -75,15 +79,13 @@ module LsL
   end
 
   def convert_file_type(file_type)
-    file_types = {
+    {
       'file' => '-',
       'directory' => 'd',
       'characterSpecial' => 'c',
       'blockSpecial' => 'b',
       'fifo' => 'p',
       'link' => 'l'
-    }
-
-    file_types[file_type]
+    }[file_type]
   end
 end
