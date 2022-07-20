@@ -15,7 +15,7 @@ class TestLs < MiniTest::Test
   AR_OPTIONS = A_OPTION.merge(R_OPTION)
   LR_OPTIONS = L_OPTION.merge(R_OPTION)
   ALR_OPTIONS = AL_OPTIONS.merge(R_OPTION)
-  RESULT_CURRENT_DIRECTORY_WITHOUT_OPTION = "ls.rb  test   \n"
+  RESULT_CURRENT_DIRECTORY_WITHOUT_OPTION = "lib    ls.rb  test   \n"
   RESULT_PARENT_DIRECTORY_WITHOUT_OPTION = <<~RESULT
     01.fizzbuzz        05.ls              09.wc_object       
     02.calendar        06.wc              README.md          
@@ -24,8 +24,9 @@ class TestLs < MiniTest::Test
   RESULT
   RESULT_NOT_EXIST_MESSAGE = "ls: hoge: No such file or directory\n"
   RESULT_CURRENT_DIRECTORY_WITH_A_OPTION = <<~RESULT
-    .         .gitkeep  test      
-    ..        ls.rb     
+    .             .rubocop.yml  test          
+    ..            lib           
+    .gitkeep      ls.rb         
   RESULT
   RESULT_PARENT_DIRECTORY_WITH_A_OPTION = <<~RESULT
     .                  01.fizzbuzz        07.bowling_object  
@@ -36,7 +37,7 @@ class TestLs < MiniTest::Test
     .rubocop.yml       06.wc              
   RESULT
 
-  RESULT_CURRENT_DIRECTORY_WITH_R_OPTION = "test   ls.rb  \n"
+  RESULT_CURRENT_DIRECTORY_WITH_R_OPTION = "test   ls.rb  lib    \n"
   RESULT_PARENT_DIRECTORY_WITH_R_OPTION = <<~RESULT
     README.md          06.wc              02.calendar        
     09.wc_object       05.ls              01.fizzbuzz        
@@ -44,8 +45,9 @@ class TestLs < MiniTest::Test
     07.bowling_object  03.rake            
   RESULT
   RESULT_CURRENT_DIRECTORY_WITH_AR_OPTIONS = <<~RESULT
-    test      .gitkeep  .         
-    ls.rb     ..        
+    test          .rubocop.yml  .             
+    ls.rb         .gitkeep      
+    lib           ..            
   RESULT
   RESULT_PARENT_DIRECTORY_WITH_AR_OPTIONS = <<~RESULT
     README.md          04.bowling         .git               
@@ -57,8 +59,9 @@ class TestLs < MiniTest::Test
   RESULT
 
   RESULT_CURRENT_DIRECTORY_WITH_L_OPTION = <<~RESULT
-    total 16
-    -rw-r--r--  1 yuta.onishi  staff  4613  7 20 14:56 ls.rb
+    total 8
+    drwxr-xr-x  3 yuta.onishi  staff    96  7 20 15:15 lib
+    -rw-r--r--  1 yuta.onishi  staff  2255  7 20 15:28 ls.rb
     drwxr-xr-x  4 yuta.onishi  staff   128  7 20 12:42 test
   RESULT
   RESULT_PARENT_DIRECTORY_WITH_L_OPTION = <<~RESULT
@@ -67,7 +70,7 @@ class TestLs < MiniTest::Test
     drwxr-xr-x  4 yuta.onishi  staff   128  6 21 18:06 02.calendar
     drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 03.rake
     drwxr-xr-x  3 yuta.onishi  staff    96  7 19 16:25 04.bowling
-    drwxr-xr-x  5 yuta.onishi  staff   160  7 20 11:25 05.ls
+    drwxr-xr-x  7 yuta.onishi  staff   224  7 20 15:32 05.ls
     drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 06.wc
     drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 07.bowling_object
     drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 08.ls_object
