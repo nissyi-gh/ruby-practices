@@ -2,15 +2,18 @@
 
 require 'optparse'
 require 'pathname'
+require 'io/console/size'
 
 class Ls
   @options = {}
   @path_names = []
   @files = []
+  @column_count = 3
+  @console_width = IO.console_size[1]
 
   class << self
-    attr_reader :options, :path_names
-    attr_accessor :files
+    attr_reader :options, :path_names, :column_count
+    attr_accessor :files, :console_width
 
     def main
       parse_option
