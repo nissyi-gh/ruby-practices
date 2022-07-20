@@ -24,6 +24,7 @@ class Ls
         if path_name.instance_of?(String)
           puts path_name
         else
+          puts "#{path_name}:" if @path_names.size >= 2
           Ls.new(path_name)
         end
       end
