@@ -57,22 +57,22 @@ class TestLs < MiniTest::Test
   RESULT
 
   RESULT_CURRENT_DIRECTORY_WITH_L_OPTION = <<~RESULT
-    total 8
-    -rw-r--r--  1 yuta.onishi  staff  2022  7 20 12:25 ls.rb
+    total 16
+    -rw-r--r--  1 yuta.onishi  staff  4613  7 20 14:56 ls.rb
     drwxr-xr-x  4 yuta.onishi  staff   128  7 20 12:42 test
   RESULT
   RESULT_PARENT_DIRECTORY_WITH_L_OPTION = <<~RESULT
     total 8
-    drwxr-xr-x 3 yuta.onishi  staff    96  6 21 18:06 01.fizzbuzz
-    drwxr-xr-x 4 yuta.onishi  staff   128  6 21 18:06 02.calendar
-    drwxr-xr-x 3 yuta.onishi  staff    96  6 21 18:06 03.rake
-    drwxr-xr-x 3 yuta.onishi  staff    96  7 19 16:25 04.bowling
-    drwxr-xr-x 5 yuta.onishi  staff   160  7 20 11:25 05.ls
-    drwxr-xr-x 3 yuta.onishi  staff    96  6 21 18:06 06.wc
-    drwxr-xr-x 3 yuta.onishi  staff    96  6 21 18:06 07.bowling_object
-    drwxr-xr-x 3 yuta.onishi  staff    96  6 21 18:06 08.ls_object
-    drwxr-xr-x 3 yuta.onishi  staff    96  6 21 18:06 09.wc_object
-    -rw-rw-r-- 1 yuta.onishi  staff  2648  6  6 18:27 README.md
+    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 01.fizzbuzz
+    drwxr-xr-x  4 yuta.onishi  staff   128  6 21 18:06 02.calendar
+    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 03.rake
+    drwxr-xr-x  3 yuta.onishi  staff    96  7 19 16:25 04.bowling
+    drwxr-xr-x  5 yuta.onishi  staff   160  7 20 11:25 05.ls
+    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 06.wc
+    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 07.bowling_object
+    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 08.ls_object
+    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 09.wc_object
+    -rw-rw-r--  1 yuta.onishi  staff  2648  6  6 18:27 README.md
   RESULT
 
   def setup
