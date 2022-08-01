@@ -90,7 +90,7 @@ class TestLs < MiniTest::Test
       total 8
       drwxr-xr-x  3 yuta.onishi  staff    96  7 20 15:15 lib
       -rw-r--r--  1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
-      drwxr-xr-x  4 yuta.onishi  staff   128  7 20 12:42 test
+      drwxr-xr-x  5 yuta.onishi  staff   160  8  1 17:54 test
     RESULT
     ) { Ls.main }
   end
@@ -119,13 +119,13 @@ class TestLs < MiniTest::Test
     set_path_current_directory
     assert_output(<<~RESULT
       total 16
-      drwxr-xr-x   7 yuta.onishi  staff   224  7 20 15:32 .
+      drwxr-xr-x   7 yuta.onishi  staff   224  8  1 17:55 .
       drwxr-xr-x  16 yuta.onishi  staff   512  7 19 18:23 ..
       -rw-rw-r--   1 yuta.onishi  staff     0  6  6 18:27 .gitkeep
       -rw-r--r--   1 yuta.onishi  staff   168  7 20 15:34 .rubocop.yml
       drwxr-xr-x   3 yuta.onishi  staff    96  7 20 15:15 lib
       -rw-r--r--   1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
-      drwxr-xr-x   4 yuta.onishi  staff   128  7 20 12:42 test
+      drwxr-xr-x   5 yuta.onishi  staff   160  8  1 17:54 test
     RESULT
     ) { Ls.main }
   end
@@ -136,13 +136,13 @@ class TestLs < MiniTest::Test
     set_r_option
     assert_output(<<~RESULT
       total 16
-      drwxr-xr-x   4 yuta.onishi  staff   128  7 20 12:42 test
+      drwxr-xr-x   5 yuta.onishi  staff   160  8  1 17:54 test
       -rw-r--r--   1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
       drwxr-xr-x   3 yuta.onishi  staff    96  7 20 15:15 lib
       -rw-r--r--   1 yuta.onishi  staff   168  7 20 15:34 .rubocop.yml
       -rw-rw-r--   1 yuta.onishi  staff     0  6  6 18:27 .gitkeep
       drwxr-xr-x  16 yuta.onishi  staff   512  7 19 18:23 ..
-      drwxr-xr-x   7 yuta.onishi  staff   224  7 20 15:32 .
+      drwxr-xr-x   7 yuta.onishi  staff   224  8  1 17:55 .
     RESULT
     ) { Ls.main }
   end
