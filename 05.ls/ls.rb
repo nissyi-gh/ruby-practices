@@ -70,10 +70,12 @@ class Ls
 
   def initialize(path_name)
     @path_name = path_name
+    @files = load_files
+    return unless @files.any?
+
     @symbolic_link_width = 0
     @size_width = 0
     @total_block_size = 0
-    @files = load_files
     @list_height = configure_list_height
     @file_name_width = configure_file_name_width
 
@@ -84,7 +86,9 @@ class Ls
 
   def load_files
     files =
-      if Ls.options[:a]
+      if @path_name.file?
+        [@path_name.to_s]
+      elsif Ls.options[:a]
         Dir.entries(@path_name).sort
       else
         Dir.glob('*', base: @path_name)

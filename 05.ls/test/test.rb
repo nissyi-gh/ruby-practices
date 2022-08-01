@@ -32,7 +32,7 @@ class TestLs < MiniTest::Test
 
   def test_ls_command_without_option_specify_file_name
     ARGV << 'ls.rb'
-    assert_output('ls.rb') { Ls.main }
+    assert_output("ls.rb  \n") { Ls.main }
   end
 
   def test_ls_command_without_option_specify_empty_directory
