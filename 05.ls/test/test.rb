@@ -94,8 +94,8 @@ class TestLs < MiniTest::Test
       <<~RESULT
         total 8
         drwxr-xr-x  3 yuta.onishi  staff    96  7 20 15:15 lib
-        -rw-r--r--  1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
-        drwxr-xr-x  5 yuta.onishi  staff   160  8  1 17:54 test
+        -rw-r--r--  1 yuta.onishi  staff  2506  8  1 18:19 ls.rb
+        drwxr-xr-x  5 yuta.onishi  staff   160  8  1 18:32 test
       RESULT
     ) { Ls.main }
   end
@@ -131,8 +131,8 @@ class TestLs < MiniTest::Test
         -rw-rw-r--   1 yuta.onishi  staff     0  6  6 18:27 .gitkeep
         -rw-r--r--   1 yuta.onishi  staff   168  7 20 15:34 .rubocop.yml
         drwxr-xr-x   3 yuta.onishi  staff    96  7 20 15:15 lib
-        -rw-r--r--   1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
-        drwxr-xr-x   5 yuta.onishi  staff   160  8  1 17:54 test
+        -rw-r--r--   1 yuta.onishi  staff  2506  8  1 18:19 ls.rb
+        drwxr-xr-x   5 yuta.onishi  staff   160  8  1 18:32 test
       RESULT
     ) { Ls.main }
   end
@@ -144,8 +144,8 @@ class TestLs < MiniTest::Test
     assert_output(
       <<~RESULT
         total 16
-        drwxr-xr-x   5 yuta.onishi  staff   160  8  1 17:54 test
-        -rw-r--r--   1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
+        drwxr-xr-x   5 yuta.onishi  staff   160  8  1 18:32 test
+        -rw-r--r--   1 yuta.onishi  staff  2506  8  1 18:19 ls.rb
         drwxr-xr-x   3 yuta.onishi  staff    96  7 20 15:15 lib
         -rw-r--r--   1 yuta.onishi  staff   168  7 20 15:34 .rubocop.yml
         -rw-rw-r--   1 yuta.onishi  staff     0  6  6 18:27 .gitkeep
