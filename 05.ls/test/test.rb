@@ -8,253 +8,142 @@ require 'pathname'
 class TestLs < MiniTest::Test
   include TestHelpers
 
-  A_OPTION = { a: true }.freeze
-  L_OPTION = { l: true }.freeze
-  R_OPTION = { r: true }.freeze
-  AL_OPTIONS = A_OPTION.merge(L_OPTION)
-  AR_OPTIONS = A_OPTION.merge(R_OPTION)
-  LR_OPTIONS = L_OPTION.merge(R_OPTION)
-  ALR_OPTIONS = AL_OPTIONS.merge(R_OPTION)
-  RESULT_CURRENT_DIRECTORY_WITHOUT_OPTION = "lib    ls.rb  test   \n"
-  RESULT_PARENT_DIRECTORY_WITHOUT_OPTION = <<~RESULT
-    01.fizzbuzz        05.ls              09.wc_object       
-    02.calendar        06.wc              README.md          
-    03.rake            07.bowling_object  
-    04.bowling         08.ls_object       
-  RESULT
-  RESULT_NOT_EXIST_MESSAGE = "ls: hoge: No such file or directory\n"
-  RESULT_CURRENT_DIRECTORY_WITH_A_OPTION = <<~RESULT
-    .             .rubocop.yml  test          
-    ..            lib           
-    .gitkeep      ls.rb         
-  RESULT
-  RESULT_PARENT_DIRECTORY_WITH_A_OPTION = <<~RESULT
-    .                  01.fizzbuzz        07.bowling_object  
-    ..                 02.calendar        08.ls_object       
-    .DS_Store          03.rake            09.wc_object       
-    .git               04.bowling         README.md          
-    .gitignore         05.ls              
-    .rubocop.yml       06.wc              
-  RESULT
-
-  RESULT_CURRENT_DIRECTORY_WITH_R_OPTION = "test   ls.rb  lib    \n"
-  RESULT_PARENT_DIRECTORY_WITH_R_OPTION = <<~RESULT
-    README.md          06.wc              02.calendar        
-    09.wc_object       05.ls              01.fizzbuzz        
-    08.ls_object       04.bowling         
-    07.bowling_object  03.rake            
-  RESULT
-  RESULT_CURRENT_DIRECTORY_WITH_AR_OPTIONS = <<~RESULT
-    test          .rubocop.yml  .             
-    ls.rb         .gitkeep      
-    lib           ..            
-  RESULT
-  RESULT_PARENT_DIRECTORY_WITH_AR_OPTIONS = <<~RESULT
-    README.md          04.bowling         .git               
-    09.wc_object       03.rake            .DS_Store          
-    08.ls_object       02.calendar        ..                 
-    07.bowling_object  01.fizzbuzz        .                  
-    06.wc              .rubocop.yml       
-    05.ls              .gitignore         
-  RESULT
-
-  RESULT_CURRENT_DIRECTORY_WITH_L_OPTION = <<~RESULT
-    total 8
-    drwxr-xr-x  3 yuta.onishi  staff    96  7 20 15:15 lib
-    -rw-r--r--  1 yuta.onishi  staff  2255  7 20 15:28 ls.rb
-    drwxr-xr-x  4 yuta.onishi  staff   128  7 20 12:42 test
-  RESULT
-  RESULT_PARENT_DIRECTORY_WITH_L_OPTION = <<~RESULT
-    total 8
-    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 01.fizzbuzz
-    drwxr-xr-x  4 yuta.onishi  staff   128  6 21 18:06 02.calendar
-    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 03.rake
-    drwxr-xr-x  3 yuta.onishi  staff    96  7 19 16:25 04.bowling
-    drwxr-xr-x  7 yuta.onishi  staff   224  7 20 15:32 05.ls
-    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 06.wc
-    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 07.bowling_object
-    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 08.ls_object
-    drwxr-xr-x  3 yuta.onishi  staff    96  6 21 18:06 09.wc_object
-    -rw-rw-r--  1 yuta.onishi  staff  2648  6  6 18:27 README.md
-  RESULT
-  RESULT_CURRENT_DIRECTORY_AND_NOT_EXIST_DIRECTORY_WITHOUT_OPTION = <<~RESULT
-    ls: hoge: No such file or directory
-    .:
-    lib    ls.rb  test   
-  RESULT
-
   def setup
     ARGV.clear
     Ls.clear_options
     Ls.clear_path_names
   end
 
-  def test_a_option_is_set?
-    set_a_option
-    Ls.main
-    assert_equal A_OPTION, sort_options_hash
-  end
-
-  def test_l_option_is_set?
-    set_l_option
-    Ls.main
-    assert_equal L_OPTION, sort_options_hash
-  end
-
-  def test_r_option_is_set?
-    set_r_option
-    Ls.main
-    assert_equal R_OPTION, sort_options_hash
-  end
-
-  def test_al_option_is_set?
-    set_al_options
-    Ls.main
-    assert_equal AL_OPTIONS, sort_options_hash
-  end
-
-  def test_ar_option_is_set?
-    set_ar_options
-    Ls.main
-    assert_equal AR_OPTIONS, sort_options_hash
-  end
-
-  def test_la_option_is_set?
-    set_la_options
-    Ls.main
-    assert_equal AL_OPTIONS, sort_options_hash
-  end
-
-  def test_lr_option_is_set?
-    set_lr_options
-    Ls.main
-    assert_equal LR_OPTIONS, sort_options_hash
-  end
-
-  def test_ra_option_is_set?
-    set_ra_options
-    Ls.main
-    assert_equal AR_OPTIONS, sort_options_hash
-  end
-
-  def test_rl_option_is_set?
-    set_rl_options
-    Ls.main
-    assert_equal LR_OPTIONS, sort_options_hash
-  end
-
-  def test_alr_option_is_set?
-    set_alr_options
-    Ls.main
-    assert_equal ALR_OPTIONS, sort_options_hash
-  end
-
-  def test_arl_option_is_set?
-    set_arl_options
-    Ls.main
-    assert_equal ALR_OPTIONS, sort_options_hash
-  end
-
-  def test_lar_option_is_set?
-    set_lar_options
-    Ls.main
-    assert_equal ALR_OPTIONS, sort_options_hash
-  end
-
-  def test_lra_option_is_set?
-    set_lra_options
-    Ls.main
-    assert_equal ALR_OPTIONS, sort_options_hash
-  end
-
-  def test_ral_option_is_set?
-    set_ral_options
-    Ls.main
-    assert_equal ALR_OPTIONS, sort_options_hash
-  end
-
-  def test_rla_option_is_set?
-    set_rla_options
-    Ls.main
-    assert_equal ALR_OPTIONS, sort_options_hash
-  end
-
-  def test_path_name_equal_current_directory
-    set_path_current_directory
-    Ls.main
-    assert_equal [Pathname.new('.')], Ls.path_names
-  end
-
-  def test_path_names_equal_any_paths
-    set_path_current_directory
-    set_path_parent_directory
-    Ls.main
-    assert_equal [Pathname.new('.'), Pathname.new('..')], Ls.path_names
-  end
-
   def test_ls_command_without_option_in_current_directory
     set_path_current_directory
-    assert_output(RESULT_CURRENT_DIRECTORY_WITHOUT_OPTION) { Ls.main }
+    assert_output("lib    ls.rb  test   \n") { Ls.main }
   end
 
-  def test_ls_command_without_option_in_parent_directory
+  def test_ls_command_without_option_in_parent_directrory
     set_path_parent_directory
-    assert_output(RESULT_PARENT_DIRECTORY_WITHOUT_OPTION) { Ls.main }
+    assert_output(<<~RESULT
+      01.fizzbuzz        05.ls              09.wc_object       
+      02.calendar        06.wc              README.md          
+      03.rake            07.bowling_object  
+      04.bowling         08.ls_object       
+    RESULT
+    ) { Ls.main }
+  end
+
+  def test_ls_command_without_option_specify_file_name
+    ARGV << 'ls.rb'
+    assert_output('ls.rb') { Ls.main }
+  end
+
+  def test_ls_command_without_option_specify_empty_directory
+    ARGV << 'test/empty'
+    assert_output('') { Ls.main }
+  end
+
+  def test_ls_command_without_option_in_current_directory_and_parent_direcrory
+    set_path_current_directory
+    set_path_parent_directory
+    assert_output(<<~RESULT
+      .:
+      lib    ls.rb  test   
+
+      ..:
+      01.fizzbuzz        05.ls              09.wc_object       
+      02.calendar        06.wc              README.md          
+      03.rake            07.bowling_object  
+      04.bowling         08.ls_object       
+    RESULT
+    ) { Ls.main }
+  end
+
+  def test_not_exist_direcoty_message
+    set_path_not_exist_directory
+    assert_output("ls: hoge: No such file or directory\n") { Ls.main }
+  end
+
+  def test_ls_command_without_option_in_current_directory_and_not_exist_directory
+    set_path_not_exist_directory
+    set_path_current_directory
+    assert_output(<<~RESULT
+      ls: hoge: No such file or directory
+      .:
+      lib    ls.rb  test   
+    RESULT
+    ) { Ls.main }
   end
 
   def test_ls_command_with_a_option_in_current_directory
     set_a_option
     set_path_current_directory
-    assert_output(RESULT_CURRENT_DIRECTORY_WITH_A_OPTION) { Ls.main }
+    assert_output(<<~RESULT
+      .             .rubocop.yml  test          
+      ..            lib           
+      .gitkeep      ls.rb         
+    RESULT
+    ) { Ls.main }
   end
 
-  def test_ls_command_with_a_option_in_parent_directory
-    set_a_option
-    set_path_parent_directory
-    assert_output(RESULT_PARENT_DIRECTORY_WITH_A_OPTION) { Ls.main }
+  def test_ls_command_with_l_option_in_current_directory
+    set_l_option
+    set_path_current_directory
+    assert_output(<<~RESULT
+      total 8
+      drwxr-xr-x  3 yuta.onishi  staff    96  7 20 15:15 lib
+      -rw-r--r--  1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
+      drwxr-xr-x  4 yuta.onishi  staff   128  7 20 12:42 test
+    RESULT
+    ) { Ls.main }
+  end
+
+  def test_ls_command_with_r_option_in_current_directory
+    set_r_option
+    set_path_current_directory
+    assert_output("test   ls.rb  lib    \n") { Ls.main }
   end
 
   def test_ls_command_with_ar_option_in_current_directory
     set_a_option
     set_r_option
     set_path_current_directory
-    assert_output(RESULT_CURRENT_DIRECTORY_WITH_AR_OPTIONS) { Ls.main }
+    assert_output(<<~RESULT
+      test          .rubocop.yml  .             
+      ls.rb         .gitkeep      
+      lib           ..            
+    RESULT
+  ) { Ls.main }
   end
 
-  def test_ls_command_with_ar_option_in_parent_directory
+  def test_ls_command_with_al_option_in_current_directory
     set_a_option
+    set_l_option
+    set_path_current_directory
+    assert_output(<<~RESULT
+      total 16
+      drwxr-xr-x   7 yuta.onishi  staff   224  7 20 15:32 .
+      drwxr-xr-x  16 yuta.onishi  staff   512  7 19 18:23 ..
+      -rw-rw-r--   1 yuta.onishi  staff     0  6  6 18:27 .gitkeep
+      -rw-r--r--   1 yuta.onishi  staff   168  7 20 15:34 .rubocop.yml
+      drwxr-xr-x   3 yuta.onishi  staff    96  7 20 15:15 lib
+      -rw-r--r--   1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
+      drwxr-xr-x   4 yuta.onishi  staff   128  7 20 12:42 test
+    RESULT
+    ) { Ls.main }
+  end
+
+  def test_ls_command_with_alr_option_in_current_directory
+    set_a_option
+    set_l_option
     set_r_option
-    set_path_parent_directory
-    assert_output(RESULT_PARENT_DIRECTORY_WITH_AR_OPTIONS) { Ls.main }
-  end
-
-  def test_ls_command_with_l_option_in_current_directory
-    set_l_option
-    set_path_current_directory
-    assert_output(RESULT_CURRENT_DIRECTORY_WITH_L_OPTION) { Ls.main }
-  end
-
-  def test_ls_command_with_l_option_in_parent_directory
-    set_l_option
-    set_path_parent_directory
-    assert_output(RESULT_PARENT_DIRECTORY_WITH_L_OPTION) { Ls.main }
-  end
-
-  def test_not_exist_direcoty_message
-    set_path_not_exist_directory
-    assert_output(RESULT_NOT_EXIST_MESSAGE) { Ls.main }
-  end
-
-  def test_specify_exist_directory_and_not_exist_directory
-    set_path_not_exist_directory
-    set_path_current_directory
-    Ls.main
-    assert_equal ['ls: hoge: No such file or directory', Pathname.new('.')], Ls.path_names
-  end
-
-  def test_ls_command_without_option_in_current_directory_and_not_exist_directory
-    set_path_not_exist_directory
-    set_path_current_directory
-    assert_output(RESULT_CURRENT_DIRECTORY_AND_NOT_EXIST_DIRECTORY_WITHOUT_OPTION) { Ls.main }
+    assert_output(<<~RESULT
+      total 16
+      drwxr-xr-x   4 yuta.onishi  staff   128  7 20 12:42 test
+      -rw-r--r--   1 yuta.onishi  staff  2420  7 20 16:20 ls.rb
+      drwxr-xr-x   3 yuta.onishi  staff    96  7 20 15:15 lib
+      -rw-r--r--   1 yuta.onishi  staff   168  7 20 15:34 .rubocop.yml
+      -rw-rw-r--   1 yuta.onishi  staff     0  6  6 18:27 .gitkeep
+      drwxr-xr-x  16 yuta.onishi  staff   512  7 19 18:23 ..
+      drwxr-xr-x   7 yuta.onishi  staff   224  7 20 15:32 .
+    RESULT
+    ) { Ls.main }
   end
 end
