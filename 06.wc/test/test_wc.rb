@@ -101,4 +101,11 @@ wc: ./hoge: open: No such file or directory
       RESULT
     ) { main }
   end
+
+  def test_accept_stdin_from_ls_command
+    stdin_old = $std_in.dup
+    $stdin = 'test    wc.rb'
+    assert_output("       2       2      11\n") { main }
+    $stdin.reopen stdin_old
+  end
 end
