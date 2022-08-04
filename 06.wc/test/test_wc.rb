@@ -76,4 +76,16 @@ class TestWc < MiniTest::Test
       RESULT
     ) { main }
   end
+
+  def test_specify_exist_file_and_not_exist_file
+    ARGV << '../.rubocop.yml'
+    ARGV << './hoge'
+    assert_output(
+      <<-RESULT
+      3       4      57 ../.rubocop.yml
+wc: ./hoge: open: No such file or directory
+      3       4      57 total
+      RESULT
+    ) { main }
+  end
 end
