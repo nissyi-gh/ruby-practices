@@ -58,4 +58,10 @@ class TestWc < MiniTest::Test
     ARGV << '../.rubocop.yml'
     assert_output("       3      57 ../.rubocop.yml\n") { main }
   end
+
+  def test_specify_rubocop_yml_with_lwc_option
+    ARGV << '-lwc'
+    ARGV << '../.rubocop.yml'
+    assert_output("       3       4      57 ../.rubocop.yml\n") { main }
+  end
 end
