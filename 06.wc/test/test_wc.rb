@@ -82,9 +82,9 @@ class TestWc < MiniTest::Test
     ARGV << './hoge'
     assert_output(
       <<-RESULT
-      3       4      57 ../.rubocop.yml
+       3       4      57 ../.rubocop.yml
 wc: ./hoge: open: No such file or directory
-      3       4      57 total
+       3       4      57 total
       RESULT
     ) { main }
   end
@@ -96,8 +96,8 @@ wc: ./hoge: open: No such file or directory
     assert_output(
       <<-RESULT
 wc: ./hoge: open: No such file or directory
-      3       4      57 ../.rubocop.yml
-      3       4      57 total
+       3       4      57 ../.rubocop.yml
+       3       4      57 total
       RESULT
     ) { main }
   end
