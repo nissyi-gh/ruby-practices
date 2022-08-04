@@ -22,6 +22,7 @@ def parse_options
 
   opt = OptionParser.new
   opt.on('-l') { params[:l] = true }
+  opt.on('-w') { params[:w] = true }
   opt.parse!(ARGV)
 
   params.empty? ? { l: true, w: true, c: true } : params
