@@ -40,4 +40,22 @@ class TestWc < MiniTest::Test
     ARGV << '../.rubocop.yml'
     assert_output("      57 ../.rubocop.yml\n") { main }
   end
+
+  def test_specify_rubocop_yml_with_lw_option
+    ARGV << '-lw'
+    ARGV << '../.rubocop.yml'
+    assert_output("       3       4 ../.rubocop.yml\n") { main }
+  end
+
+  def test_specify_rubocop_yml_with_wc_option
+    ARGV << '-wc'
+    ARGV << '../.rubocop.yml'
+    assert_output("       4      57 ../.rubocop.yml\n") { main }
+  end
+
+  def test_specify_rubocop_yml_with_lc_option
+    ARGV << '-lc'
+    ARGV << '../.rubocop.yml'
+    assert_output("       3      57 ../.rubocop.yml\n") { main }
+  end
 end
