@@ -18,8 +18,8 @@ class TestWc < MiniTest::Test
     assert_output ("wc: ./hogefugapiyo: open: No such file or directory\n") { main }
   end
 
-  def test_specify_README
-    ARGV << '../README.md'
-    assert_output ("      45      98    2648 ../README.md\n") { main }
+  def test_specify_rubocop_yml
+    ARGV << '../.rubocop.yml'
+    assert_output ("       3       4      57 ../.rubocop.yml\n") { main }
   end
 end
