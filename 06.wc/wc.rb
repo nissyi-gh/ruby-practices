@@ -1,18 +1,30 @@
 # frozen_string_literal: true
 
 require 'pathname'
+require 'optparse'
 
 def main
   print_width = 8
+  params = parse_options
   path_names = parse_paths
 
   path_names.each do |path_name|
-    print parse_file_lines(path_name).to_s.rjust(print_width)
-    print parse_word_count(path_name).to_s.rjust(print_width)
-    print File.size(path_name).to_s.rjust(print_width)
+    print parse_file_lines(path_name).to_s.rjust(print_width) if params[:l]
+    print parse_word_count(path_name).to_s.rjust(print_width) if params[:w]
+    print File.size(path_name).to_s.rjust(print_width) if params[:c]
     print ' '
     puts path_name
   end
+end
+
+def parse_options
+  params = {}
+
+  opt = OptionParser.new
+  opt.on('-l') { params[:l] = true }
+  opt.parse!(ARGV)
+
+  params.empty? ? { l: true, w: true, c: true } : params
 end
 
 def parse_paths
