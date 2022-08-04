@@ -88,4 +88,17 @@ wc: ./hoge: open: No such file or directory
       RESULT
     ) { main }
   end
+
+  # 上のテストコードと似ているが、こちらはファイルを指定した順で表示できているかのテスト
+  def test_output_files_in_order
+    ARGV << './hoge'
+    ARGV << '../.rubocop.yml'
+    assert_output(
+      <<-RESULT
+wc: ./hoge: open: No such file or directory
+      3       4      57 ../.rubocop.yml
+      3       4      57 total
+      RESULT
+    ) { main }
+  end
 end
