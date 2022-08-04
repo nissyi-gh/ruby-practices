@@ -6,6 +6,7 @@ def main
   path_names = parse_paths
 
   path_names.each do |path_name|
+    print parse_file_lines(path_name)
     print File.size(path_name)
     puts path_name
   end
@@ -25,6 +26,14 @@ def parse_paths
   end
 
   path_names
+end
+
+def parse_file_lines(path_name)
+  line_count = 0
+
+  path_name.each_line { line_count += 1 }
+
+  line_count
 end
 
 main
