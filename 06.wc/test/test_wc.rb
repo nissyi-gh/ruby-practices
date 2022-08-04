@@ -64,4 +64,16 @@ class TestWc < MiniTest::Test
     ARGV << '../.rubocop.yml'
     assert_output("       3       4      57 ../.rubocop.yml\n") { main }
   end
+
+  def test_specify_any_files
+    ARGV << '../.rubocop.yml'
+    ARGV << '../.gitignore'
+    assert_output(
+      <<~RESULT
+        3       4      57 ../.rubocop.yml
+        120     255    2090 ../.gitignore
+        123     259    2147 total
+      RESULT
+    ) { main }
+  end
 end
