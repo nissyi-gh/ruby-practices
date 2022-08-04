@@ -22,4 +22,10 @@ class TestWc < MiniTest::Test
     ARGV << '../.rubocop.yml'
     assert_output ("       3       4      57 ../.rubocop.yml\n") { main }
   end
+
+  def test_specify_rubocop_yml_with_l_option
+    ARGV << '-l'
+    ARGV << '../.rubocop.yml'
+    assert_output("       3 ../.rubocop.yml\n") { main }
+  end
 end
