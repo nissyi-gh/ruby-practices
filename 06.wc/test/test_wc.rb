@@ -17,4 +17,9 @@ class TestWc < MiniTest::Test
     ARGV << './hogefugapiyo'
     assert_output ("wc: ./hogefugapiyo: open: No such file or directory\n") { main }
   end
+
+  def test_specify_README
+    ARGV << '../README.md'
+    assert_output ("      45      98    2648 ../README.md\n") { main }
+  end
 end
