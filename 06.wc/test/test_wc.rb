@@ -69,10 +69,10 @@ class TestWc < MiniTest::Test
     ARGV << '../.rubocop.yml'
     ARGV << '../.gitignore'
     assert_output(
-      <<~RESULT
-        3       4      57 ../.rubocop.yml
-        120     255    2090 ../.gitignore
-        123     259    2147 total
+      <<-RESULT
+       3       4      57 ../.rubocop.yml
+     120     255    2090 ../.gitignore
+     123     259    2147 total
       RESULT
     ) { main }
   end
