@@ -25,7 +25,8 @@ end
 def parse_option(params)
   opt = OptionParser.new
 
-  opt.on('-l') { params[:l] = true }
+  opt.on('-a', params) { params[:a] = true }
+  opt.on('-r', params) { params[:r] = true }
 
   opt.parse!(ARGV)
 end
@@ -70,13 +71,18 @@ def simulate_ls_command(path_names, params)
   path_names.each do |path_name|
     next puts path_name.to_s if path_name.file?
 
-    file_names = params[:a] ? Dir.entries(path_name).sort : Dir.glob('*', base: path_name)
+    file_names = load_file_names(path_name, params)
     next if file_names.empty?
 
     puts "#{path_name}:" if path_names.size > 1 || ARGV.size > 1
     print_file_names(file_names)
     puts unless path_name == path_names.last
   end
+end
+
+def load_file_names(path_name, params)
+  file_names = params[:a] ? Dir.entries(path_name).sort : Dir.glob('*', base: path_name)
+  file_names.reverse! if params[:r]
 end
 
 def configure_column_count(file_name_width)
