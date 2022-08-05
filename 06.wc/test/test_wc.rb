@@ -126,6 +126,21 @@ class TestWc < MiniTest::Test
     assert_output("       2\n") { main }
     $stdin = STDIN
   end
+
+  def test_accept_stdin_from_ls_l
+    output, input = IO.pipe
+    Thread.new do
+      input.puts <<~LS
+        total 8
+        drwxr-xr-x  4 yuta.onishi  staff   128  8  5 11:05 test
+        -rw-r--r--  1 yuta.onishi  staff  2344  8  5 16:10 wc.rb
+      LS
+      input.close
+    end
+    $stdin = output
+    assert_output("       3      20     121\n") { main }
+    $stdin = STDIN
+  end
 end
 
 # rubocop:enable Metrics/ClassLength
