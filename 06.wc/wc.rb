@@ -28,7 +28,7 @@ def main
     stdin = $stdin
     stdin = File.pipe?(stdin) ? stdin.to_a : stdin.readlines
 
-    print_from_pipe_or_stdin(stdin, params)
+    print_from_pipe_or_stdin(stdin.join, params)
   end
 end
 
@@ -102,9 +102,9 @@ def print_from_path_names(results, params)
 end
 
 def print_from_pipe_or_stdin(stdin, params)
-  print_after_rjust(stdin.join.count("\n"), params[:l])
-  print_after_rjust(stdin.size, params[:w])
-  print_after_rjust(stdin.join.bytesize, params[:c])
+  print_after_rjust(stdin.count("\n"), params[:l])
+  print_after_rjust(stdin.split.size, params[:w])
+  print_after_rjust(stdin.bytesize, params[:c])
   puts
 end
 
