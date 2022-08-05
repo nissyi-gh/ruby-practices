@@ -102,8 +102,13 @@ wc: ./hoge: open: No such file or directory
     ) { main }
   end
 
-  def test_accept_stdin_from_ls_command
-    $stdin = 'test    wc.rb'
+  def test_accept_stdin_from_ls_command_as_pipe
+    output, input = IO.pipe
+    Thread.new do
+      input.puts 'test    wc.rb'
+      input.close
+    end
+    $stdin = output
     assert_output("       2       2      11\n") { main }
     $stdin = STDIN
   end
