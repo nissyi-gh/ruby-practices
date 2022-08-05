@@ -3,6 +3,8 @@
 require 'minitest/autorun'
 require_relative '../wc'
 
+# rubocop:disable Metrics/ClassLength
+
 class TestWc < MiniTest::Test
   def setup
     ARGV.clear
@@ -125,3 +127,5 @@ class TestWc < MiniTest::Test
     $stdin = STDIN
   end
 end
+
+# rubocop:enable Metrics/ClassLength
