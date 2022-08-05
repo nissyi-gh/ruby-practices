@@ -88,4 +88,4 @@ def read_file_size(path_name, params)
   file_size
 end
 
-main if __FILE__ == $0
+main if __FILE__ == $PROGRAM_NAME

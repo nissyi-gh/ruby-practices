@@ -10,17 +10,17 @@ class TestWc < MiniTest::Test
 
   def test_specify_only_parent_directory
     ARGV << '..'
-    assert_output ("wc: ..: read: Is a directory\n") { main }
+    assert_output("wc: ..: read: Is a directory\n") { main }
   end
 
   def test_specify_not_exist_directory
     ARGV << './hogefugapiyo'
-    assert_output ("wc: ./hogefugapiyo: open: No such file or directory\n") { main }
+    assert_output("wc: ./hogefugapiyo: open: No such file or directory\n") { main }
   end
 
   def test_specify_rubocop_yml
     ARGV << '../.rubocop.yml'
-    assert_output ("       3       4      57 ../.rubocop.yml\n") { main }
+    assert_output("       3       4      57 ../.rubocop.yml\n") { main }
   end
 
   def test_specify_rubocop_yml_with_l_option
@@ -81,10 +81,10 @@ class TestWc < MiniTest::Test
     ARGV << '../.rubocop.yml'
     ARGV << './hoge'
     assert_output(
-      <<-RESULT
-       3       4      57 ../.rubocop.yml
-wc: ./hoge: open: No such file or directory
-       3       4      57 total
+      <<~RESULT
+               3       4      57 ../.rubocop.yml
+        wc: ./hoge: open: No such file or directory
+               3       4      57 total
       RESULT
     ) { main }
   end
@@ -94,10 +94,10 @@ wc: ./hoge: open: No such file or directory
     ARGV << './hoge'
     ARGV << '../.rubocop.yml'
     assert_output(
-      <<-RESULT
-wc: ./hoge: open: No such file or directory
-       3       4      57 ../.rubocop.yml
-       3       4      57 total
+      <<~RESULT
+        wc: ./hoge: open: No such file or directory
+               3       4      57 ../.rubocop.yml
+               3       4      57 total
       RESULT
     ) { main }
   end
