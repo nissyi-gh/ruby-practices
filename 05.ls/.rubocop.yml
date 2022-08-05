@@ -1,0 +1,12 @@
+inherit_gem:
+  rubocop-fjord:
+    - "config/rubocop.yml"
+
+Metrics/ClassLength:
+  Exclude:
+    - 'test/**/**'
+
+Layout/TrailingWhitespace:
+  Exclude:
+    - 'test/**/**'
+
