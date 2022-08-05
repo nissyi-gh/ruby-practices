@@ -41,7 +41,7 @@ def parse_options
   opt.on('-c') { params[:c] = true }
   opt.parse!(ARGV)
 
-  params.empty? ? { l: true, l_total: 0, w: true, w_total: 0, c: true, c_total: 0 } : params
+  params.empty? ? { l: true, w: true, c: true } : params
 end
 
 def parse_file_lines(path_name)
