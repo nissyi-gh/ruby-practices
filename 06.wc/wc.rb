@@ -34,9 +34,10 @@ def main
     stdin = $stdin
     stdin = File.pipe?(stdin) ? stdin.to_a : stdin.readlines
 
-    print stdin.join.count("\n").to_s.rjust(print_width)
-    print stdin.size.to_s.rjust(print_width)
-    puts stdin.join.bytesize.to_s.rjust(print_width)
+    print stdin.join.count("\n").to_s.rjust(print_width) if params[:l]
+    print stdin.size.to_s.rjust(print_width) if params[:w]
+    print stdin.join.bytesize.to_s.rjust(print_width) if params[:c]
+    puts
   end
 end
 
