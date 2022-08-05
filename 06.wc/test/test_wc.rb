@@ -105,7 +105,7 @@ wc: ./hoge: open: No such file or directory
   def test_accept_stdin_from_ls_command_as_pipe
     output, input = IO.pipe
     Thread.new do
-      input.puts 'test    wc.rb'
+      input.puts "test\nwc.rb\n"
       input.close
     end
     $stdin = output
