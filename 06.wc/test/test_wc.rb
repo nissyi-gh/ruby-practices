@@ -112,4 +112,16 @@ class TestWc < MiniTest::Test
     assert_output("       2       2      11\n") { main }
     $stdin = STDIN
   end
+
+  def test_accept_stdin_from_ls_command_as_pipe_with_any_option
+    output, input = IO.pipe
+    Thread.new do
+      input.puts "test\nwc.rb\n"
+      input.close
+    end
+    $stdin = output
+    ARGV << '-l'
+    assert_output("       2\n") { main }
+    $stdin = STDIN
+  end
 end
