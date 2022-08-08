@@ -10,4 +10,8 @@ class Frame
     @second_shot = second_shot ? Shot.new(second_shot) : nil
     @third_shot = third_shot ? Shot.new(third_shot) : nil
   end
+
+  def score
+    [@first_shot, @second_shot, @third_shot].compact.map(&:score).sum
+  end
 end
