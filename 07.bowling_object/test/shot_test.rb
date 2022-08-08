@@ -9,6 +9,6 @@ class TestShot < MiniTest::Test
   end
 
   def test_has_expect_mark_when_strike
-    assert_eqaul 'X', Shot.new('X').mark
+    assert_equal 'X', Shot.new('X').mark
   end
 end
