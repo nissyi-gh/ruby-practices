@@ -18,4 +18,8 @@ class Frame
   def strike?
     @first_shot.mark == 'X'
   end
+
+  def spare?
+    !strike? && [@first_shot, @second_shot].compact.map(&:score).sum == 10
+  end
 end
