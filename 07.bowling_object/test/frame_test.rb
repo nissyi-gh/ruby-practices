@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'minitest/autorun'
-require_relative '../frame'
+require_relative '../lib/frame'
 
 class TestFrame < MiniTest::Test
   def test_instance_needs_at_least_1_score
