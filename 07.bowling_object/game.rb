@@ -29,4 +29,30 @@ class Game
 
     game_scores << marks
   end
+
+  def score
+    score = 0
+    @frames << nil
+
+    @frames.each_cons(3) do |current_frame, next_frame, subsequent_frame|
+      score += current_frame.score
+
+      score +=
+        if current_frame.strike?
+          if next_frame.strike? && subsequent_frame
+            next_frame.first_shot.score + subsequent_frame.first_shot.score
+          else
+            # next_frame.scoreだと3投目を含んでしまう
+            next_frame.first_shot.score + next_frame.second_shot.score
+          end
+        elsif current_frame.spare?
+          next_frame.first_shot.score
+        else
+          0
+        end
+    end
+
+    @frames.pop
+    score += @frames.last.score
+  end
 end
