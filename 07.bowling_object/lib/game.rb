@@ -3,15 +3,6 @@
 require_relative 'frame'
 
 class Game
-  attr_reader :frames
-
-  def initialize
-    @frames =
-      Game.parse_marks.map do |frame_scores|
-        Frame.new(frame_scores[0], frame_scores[1], frame_scores[2])
-      end
-  end
-
   def self.parse_marks
     game_scores = []
     marks = ARGV[0].split(',')
@@ -28,6 +19,15 @@ class Game
     end
 
     game_scores << marks
+  end
+
+  attr_reader :frames
+
+  def initialize
+    @frames =
+      Game.parse_marks.map do |frame_scores|
+        Frame.new(frame_scores[0], frame_scores[1], frame_scores[2])
+      end
   end
 
   def score
