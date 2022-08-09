@@ -11,4 +11,8 @@ class TestShot < MiniTest::Test
   def test_score_when_strike
     assert_equal 10, Shot.new('X').score
   end
+
+  def test_score_when_nil
+    assert_equal 0, Shot.new(nil).score
+  end
 end
