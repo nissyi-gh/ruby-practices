@@ -31,4 +31,12 @@ class TestFrame < MiniTest::Test
   def test_score_when_3_times_throw
     assert_equal 18, Frame.new(5, 5, 8).score
   end
+
+  def test_strike
+    assert_equal true, Frame.new('X').strike?
+  end
+
+  def test_not_strike_when_spare
+    assert_equal false, Frame.new(0, 'X').strike?
+  end
 end
