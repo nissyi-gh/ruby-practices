@@ -44,32 +44,14 @@ def parse_options
   params.empty? ? { l: true, w: true, c: true } : params
 end
 
-def parse_file_lines(path_name)
-  line_count = 0
-
-  path_name.each_line { line_count += 1 }
-
-  line_count
-end
-
-def parse_word_count(path_name)
-  word_count = 0
-
-  path_name.each_line do |line|
-    word_count += line.split.size
-  end
-
-  word_count
-end
-
 def print_after_rjust(target, flag_param)
   print target.to_s.rjust(PRINT_WIDTH) if flag_param
 end
 
 def parse_from_path_name(path_name)
   {
-    l: parse_file_lines(path_name),
-    w: parse_word_count(path_name),
+    l: path_name.each_line.sum { 1 },
+    w: path_name.each_line.sum { |line| line.split.size },
     c: File.size(path_name)
   }
 end
