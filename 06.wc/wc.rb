@@ -71,12 +71,9 @@ def print_results(results, params)
       puts result
     else
       %i[l w c].each do |key|
+        print_after_rjust(result[key], params[key])
         totals[key] += result[key]
       end
-
-      print_after_rjust(result[:l], params[:l])
-      print_after_rjust(result[:w], params[:w])
-      print_after_rjust(result[:c], params[:c])
 
       return puts if file_name == :stdin
 
@@ -86,9 +83,7 @@ def print_results(results, params)
 
   return unless ARGV.size >= 2
 
-  print_after_rjust(totals[:l], params[:l])
-  print_after_rjust(totals[:w], params[:w])
-  print_after_rjust(totals[:c], params[:c])
+  %i[l w c].each { |key| print_after_rjust(totals[key], params[key]) }
   puts ' total'
 end
 
