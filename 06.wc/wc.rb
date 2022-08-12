@@ -7,10 +7,9 @@ PRINT_WIDTH = 8
 
 def main
   params = parse_options
+  results = {}
 
   if ARGV.any?
-    results = {}
-
     ARGV.each do |path|
       results[path.to_sym] =
         if !File.exist?(path)
@@ -22,14 +21,14 @@ def main
           parse_from_path_name(path_name)
         end
     end
-
-    print_from_path_names(results, params)
   else
     stdin = $stdin
     stdin = File.pipe?(stdin) ? stdin.to_a : stdin.readlines
 
-    print_from_pipe_or_stdin(stdin.join, params)
+    results[:stdin] = parse_from_stdin(stdin.join)
   end
+
+  print_results(results, params)
 end
 
 def parse_options
@@ -56,22 +55,32 @@ def parse_from_path_name(path_name)
   }
 end
 
-def print_from_path_names(results, params)
+def parse_from_stdin(stdin)
+  {
+    l: stdin.count("\n"),
+    w: stdin.split.size,
+    c: stdin.bytesize
+  }
+end
+
+def print_results(results, params)
   totals = { l: 0, w: 0, c: 0 }
 
-  results.each do |path_name, result|
+  results.each do |file_name, result|
     if result.instance_of?(String)
       puts result
     else
-      print_after_rjust(result[:l], params[:l])
-      print_after_rjust(result[:w], params[:w])
-      print_after_rjust(result[:c], params[:c])
-      print ' '
-      puts path_name
-
       %i[l w c].each do |key|
         totals[key] += result[key]
       end
+
+      print_after_rjust(result[:l], params[:l])
+      print_after_rjust(result[:w], params[:w])
+      print_after_rjust(result[:c], params[:c])
+
+      return puts if file_name == :stdin
+
+      puts " #{file_name}"
     end
   end
 
@@ -81,13 +90,6 @@ def print_from_path_names(results, params)
   print_after_rjust(totals[:w], params[:w])
   print_after_rjust(totals[:c], params[:c])
   puts ' total'
-end
-
-def print_from_pipe_or_stdin(stdin, params)
-  print_after_rjust(stdin.count("\n"), params[:l])
-  print_after_rjust(stdin.split.size, params[:w])
-  print_after_rjust(stdin.bytesize, params[:c])
-  puts
 end
 
 main if __FILE__ == $PROGRAM_NAME
