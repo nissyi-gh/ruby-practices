@@ -17,15 +17,14 @@ def main
         elsif File.directory?(path)
           "wc: #{path}: read: Is a directory"
         else
-          path_name = Pathname.new(path)
-          parse_from_path_name(path_name)
+          File.open(path, 'r') do |file|
+            file.flock(File::LOCK_SH)
+            read_file_properties(file.read)
+          end
         end
     end
   else
-    stdin = $stdin
-    stdin = File.pipe?(stdin) ? stdin.to_a : stdin.readlines
-
-    results[:stdin] = parse_from_stdin(stdin.join)
+    results[:stdin] = read_file_properties($stdin.read)
   end
 
   print_results(results, params)
@@ -47,19 +46,11 @@ def print_after_rjust(target, flag_param)
   print target.to_s.rjust(PRINT_WIDTH) if flag_param
 end
 
-def parse_from_path_name(path_name)
+def read_file_properties(file)
   {
-    l: path_name.each_line.sum { 1 },
-    w: path_name.each_line.sum { |line| line.split.size },
-    c: File.size(path_name)
-  }
-end
-
-def parse_from_stdin(stdin)
-  {
-    l: stdin.count("\n"),
-    w: stdin.split.size,
-    c: stdin.bytesize
+    l: file.count("\n"),
+    w: file.split.size,
+    c: file.bytesize
   }
 end
 
