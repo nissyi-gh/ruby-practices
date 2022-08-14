@@ -61,7 +61,7 @@ def print_results(results, params)
     if result.instance_of?(String)
       puts result
     else
-      %i[l w c].each do |key|
+      params.each_key do |key|
         print_after_rjust(result[key], params[key])
         totals[key] += result[key]
       end
@@ -74,7 +74,7 @@ def print_results(results, params)
 
   return unless ARGV.size >= 2
 
-  %i[l w c].each { |key| print_after_rjust(totals[key], params[key]) }
+  params.each_key { |key| print_after_rjust(totals[key], params[key]) }
   puts ' total'
 end
 
