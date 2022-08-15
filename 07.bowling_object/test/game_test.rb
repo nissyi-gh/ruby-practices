@@ -8,65 +8,59 @@ class TestGame < MiniTest::Test
     ARGV.clear
   end
 
-  def test_parse_scores_pattern_a
+  def test_parse_marks_example_a
     ARGV << '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,6,4,5'
-    game = Game.new
-    assert_equal 9, game.frames[0].score
-    assert_equal 9, game.frames[1].score
-    assert_equal 3, game.frames[2].score
-    assert_equal 10, game.frames[3].score
-    assert_equal 10, game.frames[4].score
-    assert_equal 10, game.frames[5].score
-    assert_equal 10, game.frames[6].score
-    assert_equal 8, game.frames[7].score
-    assert_equal 10, game.frames[8].score
-    assert_equal 15, game.frames[9].score
+    frame_scores = Game.parse_marks
+
+    assert_equal %w[6 3], frame_scores[0]
+    assert_equal %w[9 0], frame_scores[1]
+    assert_equal %w[0 3], frame_scores[2]
+    assert_equal %w[8 2], frame_scores[3]
+    assert_equal %w[7 3], frame_scores[4]
+    assert_equal %w[X], frame_scores[5]
+    assert_equal %w[9 1], frame_scores[6]
+    assert_equal %w[8 0], frame_scores[7]
+    assert_equal %w[X], frame_scores[8]
+    assert_equal %w[6 4 5], frame_scores[9]
   end
 
-  # ~9フレーム目まではパターンaと同じ
-  def test_parse_scores_pattern_b
+  # ~9フレーム目まではexample_aと同じ
+  def test_parse_marks_example_b
     ARGV << '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,X,X,X'
-    game = Game.new
-    assert_equal 30, game.frames[9].score
+
+    assert_equal %w[X X X], Game.parse_marks[9]
   end
 
-  def test_parse_scores_pattern_c
+  def test_parse_marks_example_c
     ARGV << '0,10,1,5,0,0,0,0,X,X,X,5,1,8,1,0,4'
-    game = Game.new
-    assert_equal 10, game.frames[0].score
-    assert_equal 6, game.frames[1].score
-    assert_equal 0, game.frames[2].score
-    assert_equal 0, game.frames[3].score
-    assert_equal 10, game.frames[4].score
-    assert_equal 10, game.frames[5].score
-    assert_equal 10, game.frames[6].score
-    assert_equal 6, game.frames[7].score
-    assert_equal 9, game.frames[8].score
-    assert_equal 4, game.frames[9].score
+    frame_scores = Game.parse_marks
+
+    assert_equal %w[0 10], frame_scores[0]
+    assert_equal %w[1 5], frame_scores[1]
+    assert_equal %w[0 0], frame_scores[2]
+    assert_equal %w[0 0], frame_scores[3]
+    assert_equal %w[X], frame_scores[4]
+    assert_equal %w[X], frame_scores[5]
+    assert_equal %w[X], frame_scores[6]
+    assert_equal %w[5 1], frame_scores[7]
+    assert_equal %w[8 1], frame_scores[8]
+    assert_equal %w[0 4], frame_scores[9]
   end
 
-  def test_parse_scores_pattern_d
+  # ~8フレーム目まではexample_aと同じ
+  def test_parse_marks_example_d
     ARGV << '6,3,9,0,0,3,8,2,7,3,X,9,1,8,0,X,X,0,0'
-    game = Game.new
-    assert_equal 9, game.frames[0].score
-    assert_equal 9, game.frames[1].score
-    assert_equal 3, game.frames[2].score
-    assert_equal 10, game.frames[3].score
-    assert_equal 10, game.frames[4].score
-    assert_equal 10, game.frames[5].score
-    assert_equal 10, game.frames[6].score
-    assert_equal 8, game.frames[7].score
-    assert_equal 10, game.frames[8].score
-    assert_equal 10, game.frames[9].score
+    frame_scores = Game.parse_marks
+
+    assert_equal %w[X], frame_scores[8]
+    assert_equal %w[X 0 0], frame_scores[9]
   end
 
-  def test_parse_scores_pattern_e
+  def test_parse_marks_perfect_game
     ARGV << 'X,X,X,X,X,X,X,X,X,X,X,X'
-    game = Game.new
-    (0..8).each do |n|
-      assert_equal 10, game.frames[n].score
-    end
-    assert_equal 30, game.frames[9].score
+
+    (0..8).each { |n| assert_equal %w[X], Game.parse_marks[n] }
+    assert_equal %w[X X X], Game.parse_marks[9]
   end
 
   def test_score_example_a
