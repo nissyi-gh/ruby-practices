@@ -33,18 +33,18 @@ class TestFrame < MiniTest::Test
   end
 
   def test_strike
-    assert_equal true, Frame.new('X').strike?
+    assert Frame.new('X').strike?
   end
 
   def test_not_strike_when_spare
-    assert_equal false, Frame.new(0, 'X').strike?
+    refute Frame.new(0, 'X').strike?
   end
 
   def test_spare
-    assert_equal true, Frame.new(3, 7).spare?
+    assert Frame.new(3, 7).spare?
   end
 
   def test_not_spare
-    assert_equal false, Frame.new('X').spare?
+    refute Frame.new('X').spare?
   end
 end
