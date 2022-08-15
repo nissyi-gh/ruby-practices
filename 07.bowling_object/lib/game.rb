@@ -24,10 +24,7 @@ class Game
   attr_reader :frames
 
   def initialize
-    @frames =
-      Game.parse_marks.map do |frame_scores|
-        Frame.new(frame_scores[0], frame_scores[1], frame_scores[2])
-      end
+    @frames = Game.parse_marks.map { |frame_scores| Frame.new(*frame_scores) }
   end
 
   def score
