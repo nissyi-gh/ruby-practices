@@ -72,7 +72,7 @@ def print_results(results, params)
     end
   end
 
-  return unless ARGV.size >= 2
+  return if ARGV.size < 2
 
   params.each_key { |key| print_after_rjust(totals[key], params[key]) }
   puts ' total'
