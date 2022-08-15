@@ -16,10 +16,6 @@ class TestFrame < MiniTest::Test
     assert_equal 10, Frame.new(0, 10).second_shot.score
   end
 
-  def test_third_shot_score
-    assert_equal 10, Frame.new(5, 5, 10).third_shot.score
-  end
-
   def test_score_when_1_time_throw
     assert_equal 10, Frame.new(10).score
   end
